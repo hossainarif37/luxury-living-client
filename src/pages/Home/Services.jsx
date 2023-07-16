@@ -25,13 +25,13 @@ const Services = () => {
         },
     ]
     return (
-        <div className='lg:padding'>
+        <div className='px-5 lg:padding'>
             <div className="text-center lg:mb-14">
                 <h2 className="font-semibold text-secondary">Services</h2>
-                <h1 className="text-4xl font-bold text-primary">We're an agency tailored to all <br />
-                    clients' needs that always delivers</h1>
+                <h1 className="text-3xl lg:text-4xl font-bold text-primary">We're an agency tailored to all <br className='hidden lg:block' />
+                    clients needs that always delivers</h1>
             </div>
-            <div className='flex gap-5 pt-5 '>
+            <div className='flex flex-col lg:flex-row gap-5 pt-5 '>
                 {serviceData.map((data, index) => <ServiceCard
                     key={index}
                     serviceData={data}
