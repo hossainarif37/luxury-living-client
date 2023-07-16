@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .btn {
+        @apply text-white bg-[#251D58] px-10 py-2 rounded-md
+    }
+
+    .menu {
+        @apply bg-white w-48 top-10 space-y-2 py-5 text-center right-0 absolute shadow-lg rounded-lg z-0
+    }
+}
+
+@layer utilities {
+    .padding {
+        @apply px-[12%]
+    }
+
+    .text-primary {
+        @apply text-[#1F1632]
+    }
+
+    .text-secondary {
+        @apply text-[#251D58]
+    }
+}
