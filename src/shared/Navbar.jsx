@@ -28,7 +28,7 @@ const Navbar = () => {
             </div>
 
             {/*---------- Desktop ---------- */}
-            <ul className='hidden lg:flex gap-10 font-semibold'>
+            <ul className='hidden lg:flex gap-10'>
                 {menuItems}
             </ul>
             <button className='btn hidden lg:block'><Link to=''>Login</Link></button>
