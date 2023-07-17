@@ -53,7 +53,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <p className='text-center text-sm mt-5 lg:mt-10 px-'>Copyright © {year} - All right reserved by <br />Luxury Living Ltd</p>
+            <p className='text-center text-sm mt-5 lg:mt-10 px-'>Copyright © {year} - All right reserved by <br className='block lg:hidden' />Luxury Living Ltd</p>
         </footer>
     );
 };
