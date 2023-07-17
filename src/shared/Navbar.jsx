@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/Icon/nav_logo.png';
 import { AiOutlineMenu } from 'react-icons/ai'
 import { useState } from 'react';
-import './Navbar.css'
+// import './Navbar.css'
 const Navbar = () => {
     const [toggle, setToggle] = useState(false);
     const menuItems = <>
@@ -16,11 +16,12 @@ const Navbar = () => {
         <nav className='flex justify-between items-center lg:padding lg:mx-auto lg:pt-5 px-3 py-3 bg-[#F6F6F6] z-50'>
             <Link to='/'><img className='w-[84px]' src={logo} alt="nav_logo" /></Link>
             {/*---------- Mobile ---------- */}
-            <div className='relative lg:hidden'>
+            <div className='relative lg:hidden '>
                 <button onClick={() => setToggle((prev) => !prev)} className='text-3xl active:scale-95'>
                     <AiOutlineMenu />
                 </button>
-                <ul className={`menu menu-animation  ${toggle ? 'block' : 'hidden'}`}>
+                {/* menu */}
+                <ul className={`menu duration-500  ${toggle ? 'right-0' : 'right-[-250px]'}`}>
                     {menuItems}
                     <button className='btn w-10/12'><Link to=''>Login</Link></button>
                 </ul>

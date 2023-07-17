@@ -3,7 +3,7 @@ import Navbar from "./shared/Navbar";
 
 const App = () => {
   return (
-    <div className="max-w-[1440px] mx-auto">
+    <div className="max-w-[1440px] mx-auto overflow-hidden">
       <Navbar />
       <Outlet />
     </div>
