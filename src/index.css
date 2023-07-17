@@ -4,25 +4,31 @@
 
 @layer components {
     .btn {
-        @apply text-white bg-[#251D58] px-10 py-2 rounded-md 
+        @apply text-white bg-[#251D58] px-10 py-2 rounded-md
     }
 
     .input {
         @apply py-3 px-3 bg-[#F6F6F6] rounded-lg w-full outline-none
     }
-    .input::placeholder{
+
+    .input::placeholder {
         color: '#333';
     }
 
     .textarea {
         @apply py-3 px-3 bg-[#F6F6F6] rounded-lg w-full outline-none
     }
-    .textarea::placeholder{
+
+    .textarea::placeholder {
         color: '#333';
     }
 
     .menu {
         @apply bg-white w-48 top-10 space-y-2 py-5 text-center right-0 absolute shadow-lg rounded-lg z-0
+    }
+
+    .footer-menu {
+        @apply space-y-3
     }
 }
 
@@ -37,5 +43,9 @@
 
     .text-secondary {
         @apply text-[#251D58]
+    }
+
+    .bg-primary {
+        @apply bg-[#251D58]
     }
 }
