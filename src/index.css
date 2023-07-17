@@ -4,7 +4,21 @@
 
 @layer components {
     .btn {
-        @apply text-white bg-[#251D58] px-10 py-2 rounded-md
+        @apply text-white bg-[#251D58] px-10 py-2 rounded-md 
+    }
+
+    .input {
+        @apply py-3 px-3 bg-[#F6F6F6] rounded-lg w-full outline-none
+    }
+    .input::placeholder{
+        color: '#333';
+    }
+
+    .textarea {
+        @apply py-3 px-3 bg-[#F6F6F6] rounded-lg w-full outline-none
+    }
+    .textarea::placeholder{
+        color: '#333';
     }
 
     .menu {
