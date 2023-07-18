@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
     const year = new Date().getFullYear();
     return (
-        <footer className="lg:padding bg-primary text-white pt-14 pb-7 ">
+        <footer className="lg:padding bg-primary text-[#ddd] pt-14 pb-7 ">
             <div className=' space-y-5 text-base lg:text-sm lg:space-y-0 flex flex-col lg:flex-row text-center lg:text-start lg:justify-between'>
                 <div className='flex flex-col lg:flex-row gap-2 mt-2'>
                     <div>
