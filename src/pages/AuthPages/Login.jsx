@@ -4,10 +4,10 @@ import { BiLogoFacebook } from "react-icons/bi"
 
 const Login = () => {
     return (
-        <div className="py-10 px-3 h-screen">
+        <div className="py-10 px-3 lg:px-0 h-screen">
             <div className="lg:w-2/5 mx-auto px-2 lg:px-7 py-10 rounded-xl lg:shadow-lg">
                 {/* -------Form start-------- */}
-                <div className=" lg:px-7 ">
+                <div className=" lg:px-5 ">
                     <div className="space-y-5">
                         <h1 className="text-center text-2xl font-bold">Login</h1>
                         {/* Email */}
@@ -21,7 +21,7 @@ const Login = () => {
                 </div>
                 {/* -------Form end-------- */}
 
-                <div className="lg:px-7">
+                <div className="lg:px-5">
                     {/* ---------Or--------- */}
                     <div className="flex gap-2 items-center my-5 justify-center">
                         <div className="border w-full"></div>
