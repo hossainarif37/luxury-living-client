@@ -23,7 +23,7 @@ const Navbar = () => {
                 {/* menu */}
                 <ul className={`menu duration-500  ${toggle ? 'right-0' : 'right-[-250px]'}`}>
                     {menuItems}
-                    <button className='btn w-10/12'><Link to=''>Login</Link></button>
+                    <li><Link className='btn' to='/login'>Login</Link></li>
                 </ul>
             </div>
 
@@ -31,7 +31,7 @@ const Navbar = () => {
             <ul className='hidden lg:flex gap-10'>
                 {menuItems}
             </ul>
-            <button className='btn hidden lg:block'><Link to=''>Login</Link></button>
+            <Link className='btn hidden lg:block' to='/login'>Login</Link>
         </nav>
     );
 };

@@ -7,7 +7,7 @@ const App = () => {
     <div className="max-w-[1440px] mx-auto overflow-hidden">
       <Navbar />
       <Outlet />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
