@@ -27,7 +27,7 @@ const Projects = () => {
                 <h1 className="text-3xl font-bold text-primary">Discover the latest Interior Design <br className='hidden lg:block' />
                     available today</h1>
             </div>
-            <div className='flex flex-col lg:flex-row'>
+            <div className='flex flex-col lg:flex-row gap-5 lg:gap-0'>
                 {
                     projectInfo.map((data, index) => <ProjectCard
                         key={index}
