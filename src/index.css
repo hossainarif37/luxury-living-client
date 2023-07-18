@@ -35,6 +35,10 @@ body {
     .footer-menu {
         @apply space-y-3
     }
+
+    .footer-menu a:hover {
+        @apply text-white
+    }
 }
 
 @layer utilities {

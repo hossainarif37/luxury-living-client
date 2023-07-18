@@ -9,7 +9,7 @@ const Footer = () => {
     const year = new Date().getFullYear();
     return (
         <footer className="lg:padding bg-primary text-[#ddd] pt-14 pb-7 ">
-            <div className=' space-y-5 text-base lg:text-sm lg:space-y-0 flex flex-col lg:flex-row text-center lg:text-start lg:justify-between'>
+            <div className=' space-y-5  lg:space-y-0 flex flex-col lg:flex-row text-center lg:text-start lg:justify-between'>
                 <div className='flex flex-col lg:flex-row gap-2 mt-2'>
                     <div>
                         <img className='w-6 mx-auto' src={map} alt="map_image" />
@@ -20,25 +20,27 @@ const Footer = () => {
                         </p>
                     </div>
                 </div>
-                <div>
-                    <h2 className='text-xl font-semibold mb-2 lg:mb-5'>Company</h2>
-                    <ul className='footer-menu'>
-                        <li><Link to=''>About</Link></li>
-                        <li><Link to=''>Project</Link></li>
-                        <li><Link to=''>Out Team</Link></li>
-                        <li><Link to=''>Terms Conditions</Link></li>
-                        <li><Link to=''>Submit Listing</Link></li>
-                    </ul>
-                </div>
-                <div>
-                    <h2 className='text-xl font-semibold mb-2 lg:mb-5'>Quick Links</h2>
-                    <ul className='footer-menu'>
-                        <li><Link to=''>Quick Links</Link></li>
-                        <li><Link to=''>Rentals</Link></li>
-                        <li><Link to=''>Sales</Link></li>
-                        <li><Link to=''>Contact</Link></li>
-                        <li><Link to=''>Our blog</Link></li>
-                    </ul>
+                <div className='flex justify-around text-start flex-1'>
+                    <div>
+                        <h2 className='text-xl font-semibold mb-2 lg:mb-5'>Company</h2>
+                        <ul className='footer-menu'>
+                            <li><Link to=''>About</Link></li>
+                            <li><Link to=''>Project</Link></li>
+                            <li><Link to=''>Out Team</Link></li>
+                            <li><Link to=''>Terms Conditions</Link></li>
+                            <li><Link to=''>Submit Listing</Link></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h2 className='text-xl font-semibold mb-2 lg:mb-5'>Quick Links</h2>
+                        <ul className='footer-menu'>
+                            <li><Link to=''>Quick Links</Link></li>
+                            <li><Link to=''>Rentals</Link></li>
+                            <li><Link to=''>Sales</Link></li>
+                            <li><Link to=''>Contact</Link></li>
+                            <li><Link to=''>Our blog</Link></li>
+                        </ul>
+                    </div>
                 </div>
                 <div>
                     <h2 className='text-xl font-semibold mb-2 lg:mb-5'>About Us</h2>
