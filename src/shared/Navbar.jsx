@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/Icon/nav_logo.png';
 import { AiOutlineMenu } from 'react-icons/ai'
 import { useState } from 'react';
@@ -6,6 +6,8 @@ import { useState } from 'react';
 const Navbar = () => {
     const [toggle, setToggle] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
+    const authPage = location.pathname.includes('login') || location.pathname.includes('register') ? 'bg-white' : 'bg-[#F6F6F6]';
     const menuItems = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/about'>About Us</Link></li>
@@ -14,7 +16,7 @@ const Navbar = () => {
         <li><Link to='/admin'>Admin</Link></li>
     </>
     return (
-        <nav className='flex justify-between items-center lg:padding lg:mx-auto lg:pt-5 px-3 py-3 bg-[#F6F6F6] z-50'>
+        <nav className={`flex justify-between items-center lg:padding lg:mx-auto lg:pt-5 ${authPage} px-3 py-3  z-50`}>
             <Link to='/'><img className='w-[84px]' src={logo} alt="nav_logo" /></Link>
             {/*---------- Mobile ---------- */}
             <div className='relative lg:hidden '>
