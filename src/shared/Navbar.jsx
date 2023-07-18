@@ -1,10 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/Icon/nav_logo.png';
 import { AiOutlineMenu } from 'react-icons/ai'
 import { useState } from 'react';
 // import './Navbar.css'
 const Navbar = () => {
     const [toggle, setToggle] = useState(false);
+    const navigate = useNavigate();
     const menuItems = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/about'>About Us</Link></li>
@@ -23,7 +24,7 @@ const Navbar = () => {
                 {/* menu */}
                 <ul className={`menu duration-500  ${toggle ? 'right-0' : 'right-[-250px]'}`}>
                     {menuItems}
-                    <li><Link className='btn' to='/login'>Login</Link></li>
+                    <button onClick={() => navigate('/login')} className='btn w-10/12'>Login</button>
                 </ul>
             </div>
 
