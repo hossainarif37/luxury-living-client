@@ -28,7 +28,7 @@ const Testimonials = () => {
     ]
     return (
         <div className='bg-[#F6F6F6] lg:padding px-5 py-10 lg:py-20'>
-            <h1 className="text-4xl font-bold text-center mb-14">Testimonials</h1>
+            <h1 className="text-4xl font-bold text-center mb-10 lg:mb-14">Testimonials</h1>
             <div className='flex flex-col lg:flex-row gap-5'>
                 {testimonialData.map((data, index) => <TestimonialCard
                     key={index}

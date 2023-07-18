@@ -9,7 +9,7 @@ const Footer = () => {
     const year = new Date().getFullYear();
     return (
         <footer className="lg:padding bg-primary text-white pt-14 pb-7 ">
-            <div className=' space-y-5 lg:space-y-0  flex flex-col lg:flex-row text-center lg:text-start text-sm lg:justify-between'>
+            <div className=' space-y-5 text-base lg:text-sm lg:space-y-0 flex flex-col lg:flex-row text-center lg:text-start lg:justify-between'>
                 <div className='flex flex-col lg:flex-row gap-2 mt-2'>
                     <div>
                         <img className='w-6 mx-auto' src={map} alt="map_image" />

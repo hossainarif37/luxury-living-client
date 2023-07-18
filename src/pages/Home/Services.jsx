@@ -13,7 +13,7 @@ const Services = () => {
         {
             img: service2,
             title: 'Showroom Design',
-            styles: 'shadow-lg rounded-xl',
+            styles: 'shadow-lg',
             price: 399,
             desc: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.'
         },
