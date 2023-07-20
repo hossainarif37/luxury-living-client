@@ -14,14 +14,17 @@ const Dashboard = () => {
     </>
     return (
         <div className="flex">
-            <ul className="hidden lg:block h-screen lg:w-3/12 pl-16 pt-5 space-y-3">
+            {/* -----Desktop Sidebar------ */}
+            <ul className="hidden lg:block h-screen lg:w-3/12 pl-16 pt-5 space-y-5">
                 {dashboardMenu}
             </ul>
+            {/* -------Mobile Sidebar------*/}
             <div className="relative lg:hidden">
                 <ul className={`menu absolute duration-500 top-0 pl-3 ${dashboardToggle ? 'left-0 ' : 'left-[-250px]'}`}>
                     {dashboardMenu}
                 </ul>
             </div>
+            {/* Page Content */}
             <div onClick={() => setDashboardToggle(false)} className="bg-slate-50 h-screen w-full">
                 <Outlet />
             </div>

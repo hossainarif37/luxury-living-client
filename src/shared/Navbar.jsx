@@ -5,13 +5,16 @@ import { useContext } from 'react';
 import { Menu } from '../ContextAPI/ContextAPI';
 // import './Navbar.css'
 const Navbar = () => {
-    const { dashboardToggle, setDashboardToggle, navToggle, setNavToggle } = useContext(Menu);
-
-
     const navigate = useNavigate();
+    // Get context provider value by using Context API
+    const { dashboardToggle, setDashboardToggle, navToggle, setNavToggle } = useContext(Menu);
+    // Location Start
     const location = useLocation();
     const isDashboard = location.pathname.includes('dashboard');
     const authPage = location.pathname.includes('login') || location.pathname.includes('register') || location.pathname.includes('dashboard') ? 'bg-white' : 'bg-[#F6F6F6]';
+    // Location End
+
+    // Menu Items
     const menuItems = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/about'>About Us</Link></li>
@@ -21,6 +24,7 @@ const Navbar = () => {
     </>
     return (
         <nav className={`flex justify-between items-center ${isDashboard ? 'lg:px-16' : 'lg:padding'} lg:mx-auto lg:pt-5 ${authPage} px-3 py-3  z-50`}>
+            {/* Dashboard Menu Button */}
             <button onClick={() => {
                 setDashboardToggle((prev) => !prev);
                 navToggle && setNavToggle((prev) => !prev)
