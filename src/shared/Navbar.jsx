@@ -1,30 +1,44 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/Icon/nav_logo.png';
 import { AiOutlineMenu } from 'react-icons/ai'
-import { useState } from 'react';
+import { useContext } from 'react';
+import { Menu } from '../ContextAPI/ContextAPI';
 // import './Navbar.css'
 const Navbar = () => {
-    const [toggle, setToggle] = useState(false);
+    const { dashboardToggle, setDashboardToggle, navToggle, setNavToggle } = useContext(Menu);
+
+
     const navigate = useNavigate();
     const location = useLocation();
-    const authPage = location.pathname.includes('login') || location.pathname.includes('register') ? 'bg-white' : 'bg-[#F6F6F6]';
+    const isDashboard = location.pathname.includes('dashboard');
+    const authPage = location.pathname.includes('login') || location.pathname.includes('register') || location.pathname.includes('dashboard') ? 'bg-white' : 'bg-[#F6F6F6]';
     const menuItems = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/about'>About Us</Link></li>
         <li><Link to='/projects'>Projects</Link></li>
         <li><Link to='/contacts'>Contacts</Link></li>
-        <li><Link to='/admin'>Admin</Link></li>
+        <li><Link to='/dashboard/cart'>Dashboard</Link></li>
     </>
     return (
-        <nav className={`flex justify-between items-center lg:padding lg:mx-auto lg:pt-5 ${authPage} px-3 py-3  z-50`}>
+        <nav className={`flex justify-between items-center ${isDashboard ? 'lg:px-16' : 'lg:padding'} lg:mx-auto lg:pt-5 ${authPage} px-3 py-3  z-50`}>
+            <button onClick={() => {
+                setDashboardToggle((prev) => !prev);
+                navToggle && setNavToggle((prev) => !prev)
+            }} className={`text-3xl ${isDashboard ? 'block' : 'hidden'} lg:hidden active:scale-95`}>
+                <AiOutlineMenu />
+            </button>
             <Link to='/'><img className='w-[84px]' src={logo} alt="nav_logo" /></Link>
             {/*---------- Mobile ---------- */}
             <div className='relative lg:hidden '>
-                <button onClick={() => setToggle((prev) => !prev)} className='text-3xl active:scale-95'>
+                <button onClick={() => {
+                    setNavToggle((prev) => !prev)
+                    dashboardToggle && setDashboardToggle((prev) => !prev)
+                }}
+                    className='text-3xl active:scale-95'>
                     <AiOutlineMenu />
                 </button>
                 {/* menu */}
-                <ul className={`menu duration-500  ${toggle ? 'right-0' : 'right-[-250px]'}`}>
+                <ul className={`menu duration-500  ${navToggle ? 'right-0' : 'right-[-250px]'}`}>
                     {menuItems}
                     <button onClick={() => navigate('/login')} className='btn w-10/12'>Login</button>
                 </ul>

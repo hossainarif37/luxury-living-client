@@ -4,6 +4,10 @@ import Home from "../pages/Home/Home";
 import About from "../pages/About/About";
 import Login from "../pages/AuthPages/Login";
 import Register from "../pages/AuthPages/Register";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import Cart from '../pages/Dashboard/Cart'
+import OrderList from "../pages/Dashboard/OrderList";
+import Review from "../pages/Dashboard/Review";
 
 export const router = createBrowserRouter([
     {
@@ -25,6 +29,25 @@ export const router = createBrowserRouter([
             {
                 path: '/register',
                 element: <Register />
+            },
+            // Dashboard Start
+            {
+                path: '/dashboard',
+                element: <Dashboard />,
+                children: [
+                    {
+                        path: 'cart',
+                        element: <Cart />
+                    },
+                    {
+                        path: 'order-list',
+                        element: <OrderList />
+                    },
+                    {
+                        path: 'review',
+                        element: <Review />
+                    },
+                ]
             },
         ]
     }
