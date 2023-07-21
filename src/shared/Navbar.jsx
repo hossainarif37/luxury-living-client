@@ -23,7 +23,8 @@ const Navbar = () => {
         <li><Link to='/dashboard/cart'>Dashboard</Link></li>
     </>
     return (
-        <nav className={`flex justify-between items-center ${isDashboard ? 'lg:px-16' : 'lg:padding'} lg:mx-auto lg:pt-5 ${authPage} px-3 py-3  z-50`}>
+        <nav className={`flex justify-between items-center sticky top-0 ${isDashboard ? 'lg:px-16' : 'lg:padding'}  lg:pt-5 ${authPage} px-3 py-3  z-50`}>
+
             {/* Dashboard Menu Button */}
             <button onClick={() => {
                 setDashboardToggle((prev) => !prev);
@@ -31,8 +32,11 @@ const Navbar = () => {
             }} className={`text-3xl ${isDashboard ? 'block' : 'hidden'} lg:hidden active:scale-95`}>
                 <AiOutlineMenu />
             </button>
+
+            {/* Nav Logo */}
             <Link to='/'><img className='w-[84px]' src={logo} alt="nav_logo" /></Link>
             {/*---------- Mobile ---------- */}
+            {/* Navbar Menu Button */}
             <div className='relative lg:hidden '>
                 <button onClick={() => {
                     setNavToggle((prev) => !prev)

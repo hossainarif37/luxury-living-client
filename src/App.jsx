@@ -9,14 +9,14 @@ const App = () => {
   const [navToggle, setNavToggle] = useState(false);
   return (
     <Menu.Provider value={{ dashboardToggle, setDashboardToggle, navToggle, setNavToggle }}>
-      <div className="max-w-[1440px] mx-auto overflow-x-hidden">
+      <div className="max-w-[1440px] mx-auto overflow-x-hidden lg:overflow-x-visible">
         <Navbar />
         <div onClick={() => {
           navToggle & setNavToggle(false);
         }}>
           <Outlet />
         </div>
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </Menu.Provider>
   );

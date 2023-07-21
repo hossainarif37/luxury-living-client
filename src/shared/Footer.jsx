@@ -48,10 +48,10 @@ const Footer = () => {
                         adipiscing elit. Purus commodo ipsum <br />
                         duis laoreet maecenas. Feugiat </p>
                     <div className='flex gap-5 lg:justify-start justify-center items-center mt-3'>
-                        <Link to=''><img className='w-6' src={facebook} alt="" /></Link>
-                        <Link to=''><img className='w-6' src={instagram} alt="" /></Link>
-                        <Link to=''><img className='w-6' src={likedin} alt="" /></Link>
-                        <Link to=''><img className='w-6' src={youtube} alt="" /></Link>
+                        <Link to=''><img className='w-6 h-6' src={facebook} alt="" /></Link>
+                        <Link to=''><img className='w-6 h-6' src={instagram} alt="" /></Link>
+                        <Link to=''><img className='w-6 h-6' src={likedin} alt="" /></Link>
+                        <Link to=''><img className='w-6 h-6' src={youtube} alt="" /></Link>
                     </div>
                 </div>
             </div>

@@ -15,7 +15,7 @@ const Dashboard = () => {
     return (
         <div className="flex">
             {/* -----Desktop Sidebar------ */}
-            <ul className="hidden lg:block h-screen lg:w-3/12 pl-16 pt-5 space-y-5">
+            <ul className="hidden lg:block h-screen lg:w-3/12 pl-16 pt-5 space-y-5 ">
                 {dashboardMenu}
             </ul>
             {/* -------Mobile Sidebar------*/}
@@ -25,7 +25,7 @@ const Dashboard = () => {
                 </ul>
             </div>
             {/* Page Content */}
-            <div onClick={() => setDashboardToggle(false)} className="bg-slate-50 h-screen w-full">
+            <div onClick={() => setDashboardToggle(false)} className="bg-slate-50 pt-3 pb-10 px-5 w-full">
                 <Outlet />
             </div>
         </div>
