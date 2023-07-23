@@ -20,6 +20,10 @@ body {
         @apply py-3 px-3 bg-[#F6F6F6] rounded-lg w-full outline-none
     }
 
+    input[type="radio"]:checked .credit-radio {
+        @apply block
+    }
+
 
     .input::placeholder {
         color: '#333';

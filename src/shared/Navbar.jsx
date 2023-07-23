@@ -3,6 +3,7 @@ import logo from '../assets/Icon/nav_logo.png';
 import { AiOutlineMenu } from 'react-icons/ai'
 import { useContext } from 'react';
 import { Menu } from '../ContextAPI/ContextAPI';
+import { isAdmin } from '../Auth/user';
 // import './Navbar.css'
 const Navbar = () => {
     const navigate = useNavigate();
@@ -20,7 +21,7 @@ const Navbar = () => {
         <li><Link to='/about'>About Us</Link></li>
         <li><Link to='/projects'>Projects</Link></li>
         <li><Link to='/contacts'>Contacts</Link></li>
-        <li><Link to='/dashboard/cart'>Dashboard</Link></li>
+        {isAdmin ? <li><Link to='/admin'>Admin</Link></li> : <li><Link to='/dashboard/cart'>Dashboard</Link></li>}
     </>
     return (
         <nav className={`flex justify-between items-center sticky top-0 ${isDashboard ? 'lg:px-16' : 'lg:padding'}  lg:pt-5 ${authPage} px-3 py-3  z-50`}>

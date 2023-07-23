@@ -8,6 +8,8 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import Cart from '../pages/Dashboard/Cart'
 import OrderList from "../pages/Dashboard/OrderList";
 import Review from "../pages/Dashboard/Review";
+import Payment from "../pages/Dashboard/Payment/Payment";
+import Admin from "../Admin/Admin";
 
 export const router = createBrowserRouter([
     {
@@ -47,8 +49,21 @@ export const router = createBrowserRouter([
                         path: 'review',
                         element: <Review />
                     },
+                    {
+                        path: 'cart/payment/:id',
+                        element: <Payment />
+                    },
                 ]
             },
+            // Dashboard End
+            // Admin Start
+            {
+                path: '/admin',
+                element: <Admin />,
+                children: [
+
+                ]
+            }
         ]
     }
 ])

@@ -38,7 +38,7 @@ const Register = () => {
                     {/* ------Social Login------ */}
                     <div className="space-y-3">
                         {/* Facebook */}
-                        <button className="flex active:scale-95 transition-all border w-full p-2 rounded-3xl ">
+                        <button className="flex active:scale-95 transition-all border w-full p-2 rounded-3xl">
                             <span className="w-7  h-7 flex justify-center items-center rounded-full text-white  bg-[#3076FF]"><BiLogoFacebook className="" /></span>
                             <span className="flex-1">Continue with Facebook</span>
                         </button>
