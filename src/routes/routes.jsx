@@ -9,7 +9,11 @@ import Cart from '../pages/Dashboard/Cart'
 import OrderList from "../pages/Dashboard/OrderList";
 import Review from "../pages/Dashboard/Review";
 import Payment from "../pages/Dashboard/Payment/Payment";
-import Admin from "../Admin/Admin";
+import Admin from "../pages/Admin/Admin";
+import UserOrder from "../pages/Admin/UserOrder";
+import AddService from "../pages/Admin/AddService";
+import ManageServices from "../pages/Admin/ManageServices";
+import MakeAdmin from "../pages/Admin/MakeAdmin";
 
 export const router = createBrowserRouter([
     {
@@ -56,12 +60,28 @@ export const router = createBrowserRouter([
                 ]
             },
             // Dashboard End
+
             // Admin Start
             {
                 path: '/admin',
                 element: <Admin />,
                 children: [
-
+                    {
+                        path: 'user-order',
+                        element: < UserOrder />,
+                    },
+                    {
+                        path: 'add-service',
+                        element: < AddService />,
+                    },
+                    {
+                        path: 'manage-services',
+                        element: < ManageServices />,
+                    },
+                    {
+                        path: 'make-admin',
+                        element: < MakeAdmin />,
+                    },
                 ]
             }
         ]

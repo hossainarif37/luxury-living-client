@@ -1,1 +1,1 @@
-export const isAdmin = 'admin';
+export const isAdmin = false;

@@ -8,11 +8,15 @@ import { isAdmin } from '../Auth/user';
 const Navbar = () => {
     const navigate = useNavigate();
     // Get context provider value by using Context API
-    const { dashboardToggle, setDashboardToggle, navToggle, setNavToggle } = useContext(Menu);
+    //* Old Version
+    // const { dashboardToggle, setDashboardToggle, navToggle, setNavToggle, adminToggle, setAdminToggle } = useContext(Menu);
+    //* New Version
+    const { navToggle, setNavToggle, setDrawerToggle } = useContext(Menu);
     // Location Start
     const location = useLocation();
     const isDashboard = location.pathname.includes('dashboard');
-    const authPage = location.pathname.includes('login') || location.pathname.includes('register') || location.pathname.includes('dashboard') ? 'bg-white' : 'bg-[#F6F6F6]';
+    const isAdminPage = location.pathname.includes('admin');
+    const authPage = location.pathname.includes('login') || location.pathname.includes('register') || isDashboard || isAdminPage ? 'bg-white' : 'bg-[#F6F6F6]';
     // Location End
 
     // Menu Items
@@ -21,16 +25,15 @@ const Navbar = () => {
         <li><Link to='/about'>About Us</Link></li>
         <li><Link to='/projects'>Projects</Link></li>
         <li><Link to='/contacts'>Contacts</Link></li>
-        {isAdmin ? <li><Link to='/admin'>Admin</Link></li> : <li><Link to='/dashboard/cart'>Dashboard</Link></li>}
+        {isAdmin ? <li><Link to='/admin/user-order'>Admin</Link></li> : <li><Link to='/dashboard/cart'>Dashboard</Link></li>}
     </>
     return (
         <nav className={`flex justify-between items-center sticky top-0 ${isDashboard ? 'lg:px-16' : 'lg:padding'}  lg:pt-5 ${authPage} px-3 py-3  z-50`}>
 
-            {/* Dashboard Menu Button */}
             <button onClick={() => {
-                setDashboardToggle((prev) => !prev);
+                setDrawerToggle((prev) => !prev);
                 navToggle && setNavToggle((prev) => !prev)
-            }} className={`text-3xl ${isDashboard ? 'block' : 'hidden'} lg:hidden active:scale-95`}>
+            }} className={`text-3xl ${isAdminPage || isDashboard ? 'block' : 'hidden'} lg:hidden active:scale-95`}>
                 <AiOutlineMenu />
             </button>
 
@@ -40,8 +43,8 @@ const Navbar = () => {
             {/* Navbar Menu Button */}
             <div className='relative lg:hidden '>
                 <button onClick={() => {
-                    setNavToggle((prev) => !prev)
-                    dashboardToggle && setDashboardToggle((prev) => !prev)
+                    setNavToggle((prev) => !prev);
+                    setDrawerToggle((prev) => !prev);
                 }}
                     className='text-3xl active:scale-95'>
                     <AiOutlineMenu />
