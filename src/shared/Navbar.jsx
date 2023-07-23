@@ -4,14 +4,13 @@ import { AiOutlineMenu } from 'react-icons/ai'
 import { useContext } from 'react';
 import { Menu } from '../ContextAPI/ContextAPI';
 import { isAdmin } from '../Auth/user';
-// import './Navbar.css'
 const Navbar = () => {
+
     const navigate = useNavigate();
+
     // Get context provider value by using Context API
-    //* Old Version
-    // const { dashboardToggle, setDashboardToggle, navToggle, setNavToggle, adminToggle, setAdminToggle } = useContext(Menu);
-    //* New Version
-    const { navToggle, setNavToggle, setDrawerToggle } = useContext(Menu);
+    const { navToggle, setNavToggle, drawerToggle, setDrawerToggle } = useContext(Menu);
+
     // Location Start
     const location = useLocation();
     const isDashboard = location.pathname.includes('dashboard');
@@ -27,24 +26,28 @@ const Navbar = () => {
         <li><Link to='/contacts'>Contacts</Link></li>
         {isAdmin ? <li><Link to='/admin/user-order'>Admin</Link></li> : <li><Link to='/dashboard/cart'>Dashboard</Link></li>}
     </>
+
     return (
         <nav className={`flex justify-between items-center sticky top-0 ${isDashboard ? 'lg:px-16' : 'lg:padding'}  lg:pt-5 ${authPage} px-3 py-3  z-50`}>
 
+            {/* Drawer Button Start*/}
             <button onClick={() => {
                 setDrawerToggle((prev) => !prev);
                 navToggle && setNavToggle((prev) => !prev)
             }} className={`text-3xl ${isAdminPage || isDashboard ? 'block' : 'hidden'} lg:hidden active:scale-95`}>
                 <AiOutlineMenu />
             </button>
+            {/* Drawer Button End*/}
 
             {/* Nav Logo */}
             <Link to='/'><img className='w-[84px]' src={logo} alt="nav_logo" /></Link>
-            {/*---------- Mobile ---------- */}
-            {/* Navbar Menu Button */}
+
+            {/*---------- Mobile Version ---------- */}
             <div className='relative lg:hidden '>
+                {/* Navbar Menu Button */}
                 <button onClick={() => {
                     setNavToggle((prev) => !prev);
-                    setDrawerToggle((prev) => !prev);
+                    drawerToggle && setDrawerToggle((prev) => !prev);
                 }}
                     className='text-3xl active:scale-95'>
                     <AiOutlineMenu />
@@ -56,7 +59,7 @@ const Navbar = () => {
                 </ul>
             </div>
 
-            {/*---------- Desktop ---------- */}
+            {/*---------- Desktop Version ---------- */}
             <ul className='hidden lg:flex gap-10'>
                 {menuItems}
             </ul>

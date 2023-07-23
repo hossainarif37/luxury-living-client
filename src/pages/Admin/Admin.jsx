@@ -18,7 +18,6 @@ const Admin = () => {
     </>
     return (
         <>
-            {/* Sidebar */}
             <Drawer menuItems={menuItems} />
         </>
     );
