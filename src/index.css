@@ -48,6 +48,7 @@ body {
     .footer-menu a:hover {
         @apply text-white
     }
+    
 }
 
 @layer utilities {
@@ -65,5 +66,9 @@ body {
 
     .bg-primary {
         @apply bg-[#251D58]
+    }
+
+    .bg-secondary {
+        @apply bg-[#1F1632]
     }
 }

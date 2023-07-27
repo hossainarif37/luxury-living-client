@@ -3,7 +3,6 @@ import logo from '../assets/Icon/nav_logo.png';
 import { AiOutlineMenu } from 'react-icons/ai'
 import { useContext } from 'react';
 import { Menu } from '../ContextAPI/ContextAPI';
-import { isAdmin } from '../Auth/user';
 const Navbar = () => {
 
     const navigate = useNavigate();
@@ -24,7 +23,8 @@ const Navbar = () => {
         <li><Link to='/about'>About Us</Link></li>
         <li><Link to='/projects'>Projects</Link></li>
         <li><Link to='/contacts'>Contacts</Link></li>
-        {isAdmin ? <li><Link to='/admin/user-order'>Admin</Link></li> : <li><Link to='/dashboard/cart'>Dashboard</Link></li>}
+        <li><Link to='/dashboard/cart'>Dashboard</Link></li>
+        <li><Link to='/admin/user-order'>Admin</Link></li>
     </>
 
     return (

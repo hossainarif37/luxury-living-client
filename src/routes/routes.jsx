@@ -43,7 +43,7 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         path: 'cart',
-                        element: <Cart />
+                        element: <Cart />,
                     },
                     {
                         path: 'order-list',
