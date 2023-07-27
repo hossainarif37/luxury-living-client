@@ -2,8 +2,8 @@ import { AiOutlineCloudUpload } from 'react-icons/ai'
 
 const AddService = () => {
     return (
-        <div className='relative  mt-3 lg:ml-3 lg:mr-10'>
-            <div className="flex flex-col lg:bg-white lg:p-7 rounded-2xl gap-y-3 w-1/2">
+        <div className='mt-3 lg:ml-3 lg:mr-10'>
+            <div className="flex flex-col lg:bg-white lg:p-7 rounded-2xl gap-y-3 lg:w-1/2">
                 <div className='space-y-2'>
                     <label className='font-semibold text-primary'>Service Title</label>
                     <input className="input bg-white border" type="text" placeholder="Enter Title" />

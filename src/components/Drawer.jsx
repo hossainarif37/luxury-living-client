@@ -24,7 +24,7 @@ const Drawer = ({ menuItems }) => {
             {/* -------Mobile Version End------*/}
 
             {/* Page Content */}
-            <div onClick={() => setDrawerToggle(false)} className="bg-slate-50 lg:pt-3 pb-10 lg:px-5 w-full">
+            <div onClick={() => setDrawerToggle(false)} className="bg-slate-50 pt-3 pb-10 px-5 w-full">
                 <Outlet />
             </div>
         </div>
