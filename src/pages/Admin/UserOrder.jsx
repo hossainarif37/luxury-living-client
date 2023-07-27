@@ -11,10 +11,10 @@ const UserOrder = () => {
                 <thead className="">
                     <tr className="flex justify-between text-xs lg:text-sm lg:mb-5 lg:bg-[#F5F6FA] rounded-2xl py-3 px-5 ">
                         <th className="font-semibold flex-1">Name</th>
-                        <th className="font-semibold flex-1 ">Email</th>
+                        <th className="font-semibold flex-1">Email</th>
                         <th className="font-semibold flex-1 lg:ml-10 lg:pl-5">Service</th>
-                        <th className="font-semibold flex-1 ">Pay With</th>
-                        <th className="font-semibold flex-1  ">Status</th>
+                        <th className="font-semibold flex-1">Pay With</th>
+                        <th className="font-semibold flex-1">Status</th>
                     </tr>
                 </thead>
                 {/* -------body------- */}
@@ -23,7 +23,7 @@ const UserOrder = () => {
                         tableArr.map((i) => <>
                             <tr className="flex justify-between  space-x-5 px-5 text-xs lg:text-sm ">
                                 <td className="flex-1">Md Arif</td>
-                                <td className="flex-1 ">onexboy<br className="lg:hidden"/>arif6833<br className="lg:hidden"/>@gmail<br className="lg:hidden"/>.com</td>
+                                <td className="flex-1 ">onexboy<br className="lg:hidden" />arif6833<br className="lg:hidden" />@gmail<br className="lg:hidden" />.com</td>
                                 <td className="flex-1 lg:ml-10">Office Interior Design</td>
                                 <td className="flex-1">Credit Card</td>
                                 <td className="flex-1">

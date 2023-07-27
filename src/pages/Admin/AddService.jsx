@@ -2,11 +2,19 @@ import { AiOutlineCloudUpload } from 'react-icons/ai'
 
 const AddService = () => {
     return (
-        <div className='lg:bg-white lg:p-7 rounded-2xl mt-5 lg:ml-3 lg:mr-10'>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-5 items-center ">
+        <div className='relative  mt-3 lg:ml-3 lg:mr-10'>
+            <div className="flex flex-col lg:bg-white lg:p-7 rounded-2xl gap-y-3 w-1/2">
                 <div className='space-y-2'>
                     <label className='font-semibold text-primary'>Service Title</label>
                     <input className="input bg-white border" type="text" placeholder="Enter Title" />
+                </div>
+                <div className="flex flex-col space-y-2">
+                    <label className='font-semibold text-primary' htmlFor="service-price">Price</label>
+                    <input className="input bg-white border" type="text" placeholder="Enter Price" />
+                </div>
+                <div className="flex flex-col space-y-2">
+                    <label className='font-semibold text-primary' htmlFor="service-description">Description</label>
+                    <textarea className='textarea bg-white border' placeholder='Enter Description' name="" id="service-description" cols="30" rows="2"></textarea>
                 </div>
                 <div className=" space-y-2">
                     <label className='font-semibold text-primary'>Image</label>
@@ -16,12 +24,10 @@ const AddService = () => {
                         <input className="absolute inset-0 opacity-0" type="file" />
                     </div>
                 </div>
-                <div className="flex flex-col space-y-2">
-                    <label className='font-semibold text-primary' htmlFor="service-description">Description</label>
-                    <textarea className='textarea bg-white border' placeholder='Enter Description' name="" id="service-description" cols="30" rows="4"></textarea>
-                </div>
+                <button className='btn mt-3'>Submit</button>
+
+
             </div>
-            <button className='btn mt-5'>Submit</button>
         </div>
     );
 };

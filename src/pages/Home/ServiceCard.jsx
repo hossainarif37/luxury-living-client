@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const ServiceCard = ({ serviceData, cartStyles }) => {
+const ServiceCard = ({ serviceData, cartStyles, editService, deleteService }) => {
     const { _id, img, title, desc, price, styles } = serviceData;
     return (
         <div className={`${cartStyles ? 'shadow-lg text-sm rounded-xl' : styles} text-center p-5`}>
@@ -12,7 +12,11 @@ const ServiceCard = ({ serviceData, cartStyles }) => {
             </div>
             <div className="flex justify-center gap-3 items-center  mt-5">
                 {!cartStyles && <button className="btn bg-amber-500 font-semibold px-5 w-full">Add to Cart</button>}
-                <Link to={`/dashboard/cart/payment/${_id}`} className={`btn ${!cartStyles && 'w-full px-5 '}`}>Book</Link>
+                {!editService && <Link to={`/dashboard/cart/payment/${_id}`} className={`btn ${!cartStyles && 'w-full px-5 '}`}>Book</Link>}
+                {/* Manage Service Button */}
+                {editService && <button className="btn bg-amber-500 font-semibold px-5 w-full">Edit</button>}
+                {editService && <button className="btn bg-red-600 font-semibold px-5 w-full">Delete</button>}
+
             </div>
         </div>
     );
