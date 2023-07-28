@@ -1,24 +1,58 @@
 import { Link } from "react-router-dom";
 import googleIcon from "../../assets/Icon/google.png"
 import { BiLogoFacebook } from "react-icons/bi"
+import { useForm } from "react-hook-form";
+import auth from "../../firebase.init";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [signInWithEmailAndPassword, user, loading, error,] = useSignInWithEmailAndPassword(auth);
+    const wrongPassword = error?.message.includes('wrong-password');
+    const userNotFound = error?.message.includes('user-not-found');
+
+    if (error) {
+        console.log(error.message);
+    }
+    const handleRegister = (data) => {
+        signInWithEmailAndPassword(data.email, data.password);
+        if (user) {
+            toast.success('Login Succesfully!')
+        }
+    }
+
     return (
         <div className="py-10 px-3 lg:px-0 h-screen">
             <div className="lg:w-2/5 mx-auto px-2 lg:px-12 py-10 rounded-xl lg:shadow-lg">
                 {/* -------Form start-------- */}
-                <div>
+                <form onSubmit={handleSubmit(handleRegister)}>
                     <div className="space-y-5">
                         <h1 className="text-center text-2xl font-bold">Login</h1>
                         {/* Email */}
-                        <input className="input border-[#999] px-0 placeholder:text-gray-700 text-gray-800 bg-white border-b rounded-none" type="email" placeholder="Email" />
+                        <input
+                            className="input border-[#999] px-0 placeholder:text-gray-700 text-gray-800 bg-white border-b rounded-none"
+                            type="email"
+                            placeholder="Email"
+                            {...register('email')}
+                        />
                         {/* Password */}
-                        <input className="input border-[#999] px-0 placeholder:text-gray-700 text-gray-800 bg-white border-b rounded-none" type="password" placeholder="Password" />
+                        <input
+                            className="input border-[#999] px-0 placeholder:text-gray-700 text-gray-800 bg-white border-b rounded-none"
+                            type="password"
+                            placeholder="Password"
+                            {...register('password')}
+
+                        />
+                        {/* Error Message */}
+                        <p className="text-red-500 text-sm">
+                            {wrongPassword && 'Wrong password!' || userNotFound && 'User not found!'}
+                        </p>
                     </div>
                     {/* Login Button */}
                     <input className="btn w-full cursor-pointer mt-7 mb-3" type="submit" value="Login" />
                     <p className="text-center">Don't Have an account? <Link className="text-secondary underline" to='/register'>Create an account</Link></p>
-                </div>
+                </form>
                 {/* -------Form end-------- */}
 
                 <div>

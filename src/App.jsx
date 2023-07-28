@@ -3,6 +3,7 @@ import Navbar from "./shared/Navbar";
 import Footer from "./shared/Footer";
 import { Menu } from "./ContextAPI/ContextAPI";
 import { useState } from "react";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const [navToggle, setNavToggle] = useState(false);
@@ -17,6 +18,7 @@ const App = () => {
           navToggle & setNavToggle(false);
         }}>
           <Outlet />
+          <Toaster />
         </div>
         {/* <Footer /> */}
       </div>

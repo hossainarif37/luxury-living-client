@@ -3,13 +3,15 @@ import logo from '../assets/Icon/nav_logo.png';
 import { AiOutlineMenu } from 'react-icons/ai'
 import { useContext } from 'react';
 import { Menu } from '../ContextAPI/ContextAPI';
+import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
+import auth from '../firebase.init';
 const Navbar = () => {
-
+    const [user] = useAuthState(auth);
+    const [signOut] = useSignOut(auth);
     const navigate = useNavigate();
 
     // Get context provider value by using Context API
     const { navToggle, setNavToggle, drawerToggle, setDrawerToggle } = useContext(Menu);
-
     // Location Start
     const location = useLocation();
     const isDashboard = location.pathname.includes('dashboard');
@@ -63,7 +65,13 @@ const Navbar = () => {
             <ul className='hidden lg:flex gap-10'>
                 {menuItems}
             </ul>
-            <Link className='btn hidden lg:block' to='/login'>Login</Link>
+            {
+                user ? <button
+                    className='btn bg-gray-500 font-bold px-7'
+                    onClick={() => signOut()}
+                >Logout</button> :
+                    <Link className='btn hidden lg:block' to='/login'>Login</Link>
+            }
         </nav>
     );
 };
