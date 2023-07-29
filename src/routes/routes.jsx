@@ -14,6 +14,7 @@ import UserOrder from "../pages/Admin/UserOrder";
 import AddService from "../pages/Admin/AddService";
 import ManageServices from "../pages/Admin/ManageServices";
 import MakeAdmin from "../pages/Admin/MakeAdmin";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -39,7 +40,7 @@ export const router = createBrowserRouter([
             // Dashboard Start
             {
                 path: '/dashboard',
-                element: <Dashboard />,
+                element: <PrivateRoute><Dashboard /></PrivateRoute>,
                 children: [
                     {
                         path: 'cart',

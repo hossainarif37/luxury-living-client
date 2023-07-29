@@ -1,17 +1,29 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import googleIcon from "../../assets/Icon/google.png"
 import { BiLogoFacebook } from "react-icons/bi"
 import { useForm } from "react-hook-form";
 import auth from "../../firebase.init";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { useAuthState, useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { toast } from "react-hot-toast";
 
 const Login = () => {
+    const [currentUser, currentUserLoading, currentUserError] = useAuthState(auth);
+    const location = useLocation();
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [signInWithEmailAndPassword, user, loading, error,] = useSignInWithEmailAndPassword(auth);
     const wrongPassword = error?.message.includes('wrong-password');
     const userNotFound = error?.message.includes('user-not-found');
 
+    let from = location.state?.from?.pathname || "/";
+    if (currentUserLoading || loading) {
+        return <p>loading...</p>
+    }
+
+    if (currentUser) {
+        navigate(from, { replace: true });
+    }
+    console.log(currentUser);
     if (error) {
         console.log(error.message);
     }
@@ -34,18 +46,20 @@ const Login = () => {
                             className="input border-[#999] px-0 placeholder:text-gray-700 text-gray-800 bg-white border-b rounded-none"
                             type="email"
                             placeholder="Email"
-                            {...register('email')}
+                            {...register('email', { required: true })}
+                            required
                         />
                         {/* Password */}
                         <input
                             className="input border-[#999] px-0 placeholder:text-gray-700 text-gray-800 bg-white border-b rounded-none"
                             type="password"
                             placeholder="Password"
-                            {...register('password')}
+                            {...register('password', { required: true })}
+                            required
 
                         />
                         {/* Error Message */}
-                        <p className="text-red-500 text-sm">
+                        <p className={`text-red-500 text-sm ${error ? 'block' : 'hidden'}`}>
                             {wrongPassword && 'Wrong password!' || userNotFound && 'User not found!'}
                         </p>
                     </div>
