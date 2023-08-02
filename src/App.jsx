@@ -7,11 +7,12 @@ import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const [navToggle, setNavToggle] = useState(false);
+  const [isScroll, setIsScroll] = useState(false);
   // const [dashboardToggle, setDashboardToggle] = useState(false);
   // const [adminToggle, setAdminToggle] = useState(false);
   const [drawerToggle, setDrawerToggle] = useState(false);
   return (
-    <Menu.Provider value={{ navToggle, setNavToggle, drawerToggle, setDrawerToggle }}>
+    <Menu.Provider value={{ navToggle, setNavToggle, drawerToggle, setDrawerToggle, isScroll, setIsScroll }}>
       <div className="max-w-[1440px] mx-auto overflow-x-hidden lg:overflow-x-visible">
         <Navbar />
         <div onClick={() => {

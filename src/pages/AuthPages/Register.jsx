@@ -27,9 +27,9 @@ const Register = () => {
         return <p>loading...</p>
     }
 
-    if (error || errors || googleError || facebookError) {
-        console.log('Error', error, errors && errors, 'GoggleError', googleError, 'FacaebookError', facebookError);
-    }
+    // if (error || errors || googleError || facebookError) {
+    //     console.log('Error', error, errors && errors, 'GoggleError', googleError, 'FacaebookError', facebookError);
+    // }
 
     const handleRegister = (data) => {
         if (data.password === data.confirmPassword) {
@@ -41,7 +41,6 @@ const Register = () => {
         }
         else {
             setCustomError('Password not matched!');
-            console.log(errors);
         }
 
     };
@@ -65,34 +64,47 @@ const Register = () => {
                             className="input border-[#999] px-0 placeholder:text-gray-700 text-gray-800 bg-white border-b rounded-none"
                             type="text"
                             placeholder="Name"
-                            {...register('name', { required: 'Write maximum 20 character', maxLength: 20, })}
-                            required
+                            {...register('name', { required: 'Name is required!', maxLength: 15, })}
+
                         />
+                        {
+                            errors?.name?.type === 'required' && <p className="error">{errors.name.message}</p> || errors?.name?.type === 'maxLength' && <p className="error">
+                                {'Maxlength 15 character!'}</p>
+                        }
 
                         {/* Email */}
                         <input
                             className="input border-[#999] px-0 placeholder:text-gray-700 text-gray-800 bg-white border-b rounded-none"
                             type="email"
                             placeholder="Email"
-                            {...register('email', { required: true })}
-                            required
+                            {...register('email', {
+                                required: 'Email is required!',
+                                pattern: /^\S+@\S+\.\S+$/
+                            })}
                         />
+                        {
+                            errors?.email?.type === 'required' && <p className="error">{errors.email.message}</p> || errors?.email?.type === 'pattern' && <p className="error">Email is invalid! </p>
+                        }
                         {/* Password */}
                         <input
                             className="input border-[#999] px-0 placeholder:text-gray-700 text-gray-800 bg-white border-b rounded-none"
                             type="password"
                             placeholder="Password"
-                            {...register('password', { required: true })}
-                            required
+                            {...register('password', { required: 'Password is required!', minLength: 6, })}
                         />
+                        {
+                            errors?.password?.type === 'required' && <p className="error">{errors.password.message}</p> || errors?.password?.type === 'minLength' && <p className="error">Minimum length 6 character!</p>
+                        }
                         {/* Confirm Password */}
                         <input
                             className="input border-[#999] px-0 placeholder:text-gray-700 text-gray-800 bg-white border-b rounded-none"
                             type="password"
                             placeholder="Confirm Password"
-                            {...register('confirmPassword', { required: true })}
-                            required
+                            {...register('confirmPassword', { required: 'Confirm Password is required!' })}
                         />
+                        {
+                            errors?.confirmPassword?.type === 'required' && <p className="error">{errors.confirmPassword.message}</p> || customError && <p className="error">{customError}</p>
+                        }
                         {/* Error Message */}
                         <p className={`text-red-500 text-sm ${error ? 'block' : 'hidden'}`}>
                             {

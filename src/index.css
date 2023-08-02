@@ -48,7 +48,7 @@ body {
     .footer-menu a:hover {
         @apply text-white
     }
-    
+
 }
 
 @layer utilities {
@@ -70,5 +70,9 @@ body {
 
     .bg-secondary {
         @apply bg-[#1F1632]
+    }
+
+    .error {
+        @apply text-red-500 text-sm
     }
 }

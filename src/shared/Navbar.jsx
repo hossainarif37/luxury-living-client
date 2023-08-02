@@ -12,6 +12,7 @@ const Navbar = () => {
 
     // Get context provider value by using Context API
     const { navToggle, setNavToggle, drawerToggle, setDrawerToggle } = useContext(Menu);
+
     // Location Start
     const location = useLocation();
     const isDashboard = location.pathname.includes('dashboard');
@@ -23,7 +24,7 @@ const Navbar = () => {
     const menuItems = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/about'>About Us</Link></li>
-        <li><Link to='/projects'>Projects</Link></li>
+        <li><a href='/#project'>Projects</a></li>
         <li><Link to='/contacts'>Contacts</Link></li>
         <li><Link to='/dashboard/cart'>Dashboard</Link></li>
         <li><Link to='/admin/user-order'>Admin</Link></li>

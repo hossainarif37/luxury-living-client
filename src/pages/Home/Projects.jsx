@@ -21,7 +21,7 @@ const Projects = () => {
         },
     ]
     return (
-        <div className="lg:padding py-14 lg:py-20">
+        <div id='project' className="lg:padding py-14 lg:py-20">
             <div className="text-center mb-5 px-5 lg:mb-14">
                 <h2 className="font-semibold text-secondary">Projects</h2>
                 <h1 className="text-3xl font-bold text-primary">Discover the latest Interior Design <br className='hidden lg:block' />

@@ -3,20 +3,26 @@ import googleIcon from "../../assets/Icon/google.png"
 import { BiLogoFacebook } from "react-icons/bi"
 import { useForm } from "react-hook-form";
 import auth from "../../firebase.init";
-import { useAuthState, useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { useAuthState, useSignInWithEmailAndPassword, useSignInWithFacebook, useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { toast } from "react-hot-toast";
 
 const Login = () => {
     const [currentUser, currentUserLoading, currentUserError] = useAuthState(auth);
     const location = useLocation();
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [signInWithEmailAndPassword, user, loading, error,] = useSignInWithEmailAndPassword(auth);
+
+    //* Create user with Google
+    const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
+
+    //* Create user with Facebook
+    const [signInWithFacebook, facebookUser, facebookLoading, facebookError] = useSignInWithFacebook(auth);
     const wrongPassword = error?.message.includes('wrong-password');
     const userNotFound = error?.message.includes('user-not-found');
 
     let from = location.state?.from?.pathname || "/";
-    if (currentUserLoading || loading) {
+    if (currentUserLoading || loading || googleLoading) {
         return <p>loading...</p>
     }
 
@@ -29,6 +35,7 @@ const Login = () => {
     }
     const handleRegister = (data) => {
         signInWithEmailAndPassword(data.email, data.password);
+        reset();
         if (user) {
             toast.success('Login Succesfully!')
         }
@@ -46,19 +53,31 @@ const Login = () => {
                             className="input border-[#999] px-0 placeholder:text-gray-700 text-gray-800 bg-white border-b rounded-none"
                             type="email"
                             placeholder="Email"
-                            {...register('email', { required: true })}
-                            required
+                            {...register('email', {
+                                required: 'Email is required!',
+                                pattern: /^\S+@\S+\.\S+$/
+                            })}
                         />
+                        {
+                            errors?.email?.type === 'required' && <p className="error">{errors.email.message}</p> ||
+                            errors?.email?.type === 'pattern' && <p className="error">Invalid Email</p>
+                        }
                         {/* Password */}
                         <input
                             className="input border-[#999] px-0 placeholder:text-gray-700 text-gray-800 bg-white border-b rounded-none"
                             type="password"
                             placeholder="Password"
-                            {...register('password', { required: true })}
-                            required
+                            {...register('password', {
+                                required: 'Password is required!',
+                                minLength: 6
+                            })}
 
                         />
                         {/* Error Message */}
+                        {
+                            errors?.password?.type === 'required' && <p className="error">{errors.password.message}</p> ||
+                            errors?.password?.type === 'minLength' && <p className="error">Minimum length 6 character!</p>
+                        }
                         <p className={`text-red-500 text-sm ${error ? 'block' : 'hidden'}`}>
                             {wrongPassword && 'Wrong password!' || userNotFound && 'User not found!'}
                         </p>
@@ -79,12 +98,18 @@ const Login = () => {
                     {/* ------Social Login------ */}
                     <div className="space-y-3">
                         {/* Facebook */}
-                        <button className="flex active:scale-95 transition-all border w-full p-2 rounded-3xl ">
+                        <button
+                            className="flex active:scale-95 transition-all border w-full p-2 rounded-3xl"
+                            onClick={() => signInWithFacebook()}
+                        >
                             <span className="w-7  h-7 flex justify-center items-center rounded-full text-white  bg-[#3076FF]"><BiLogoFacebook className="" /></span>
                             <span className="flex-1">Continue with Facebook</span>
                         </button>
                         {/* Google */}
-                        <button className="flex active:scale-95 transition-all border w-full p-2 rounded-3xl">
+                        <button
+                            className="flex active:scale-95 transition-all border w-full p-2 rounded-3xl"
+                            onClick={() => signInWithGoogle()}
+                        >
                             <img className="w-7 h-7" src={googleIcon} alt="google icon" />
                             <span className="flex-1">Continue with Google</span>
                         </button>
