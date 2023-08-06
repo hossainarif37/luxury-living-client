@@ -1,18 +1,27 @@
 import { BiLogoFacebook } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import googleIcon from "../../assets/Icon/google.png"
 import { useForm } from "react-hook-form";
 import auth from "../../firebase.init";
-import { useCreateUserWithEmailAndPassword, useSignInWithFacebook, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithFacebook, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { toast } from "react-hot-toast";
 import { useState } from "react";
 
 const Register = () => {
     const [customError, setCustomError] = useState('');
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [databaseLoading, setDatabaseLoading] = useState(false);
+    const [currentUser, currentUserLoading] = useAuthState(auth);
+    const navigate = useNavigate();
+
+
+    // const [displayName, setDisplayName] = useState('');
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
     //* Create user with Email and Password
     const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
+
+    //* Update User Profile with DisplayName and Photo
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
     //* Create user with Google
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
@@ -23,34 +32,62 @@ const Register = () => {
 
     const emailAlreadyUsed = error?.message.includes('email-already-in-use');
 
-    if (loading || googleLoading || facebookLoading) {
+    if (loading || googleLoading || facebookLoading || updating || currentUserLoading || databaseLoading) {
         return <p>loading...</p>
     }
+
 
     // if (error || errors || googleError || facebookError) {
     //     console.log('Error', error, errors && errors, 'GoggleError', googleError, 'FacaebookError', facebookError);
     // }
 
-    const handleRegister = (data) => {
+    const handleRegister = async (data) => {
+        const { displayName, email } = data;
         if (data.password === data.confirmPassword) {
-            createUserWithEmailAndPassword(data.email, data.password);
+            //* Create User account with Firebase
+            const isUserExist = await createUserWithEmailAndPassword(data.email, data.password);
             setCustomError('');
-            if (user) {
-                toast.success('User Created Successfully!');
+            if (isUserExist) {
+                //* Update User Profile
+                const updateUser = await updateProfile({ displayName });
+                if (updateUser === true) {
+                    setDatabaseLoading(prev => !prev)
+                    reset();
+                    //* Save User Data in Database: (userName, email, role)
+                    fetch('http://localhost:5000/users', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            userName: displayName,
+                            email,
+                            role: 'user'
+                        }),
+                        headers: {
+                            'Content-type': 'application/json; charset=UTF-8',
+                        },
+                    })
+                        .then((res) => res.json())
+                        .then((data) => {
+                            if (data.acknowledged) {
+                                setDatabaseLoading(prev => !prev)
+                                navigate('/');
+                                toast.success('User Created Successfully!');
+                            }
+                            else {
+                                toast.error(data.message)
+                            }
+                        });
+                }
             }
+
+
         }
         else {
             setCustomError('Password not matched!');
         }
 
     };
-
-
-
-
     return (
         <div className="py-10 px-3 lg:px-0">
-
             <div className="lg:w-2/5 mx-auto px-2  ">
                 {/*//* -------Form start-------- */}
                 <form
@@ -64,7 +101,7 @@ const Register = () => {
                             className="input border-[#999] px-0 placeholder:text-gray-700 text-gray-800 bg-white border-b rounded-none"
                             type="text"
                             placeholder="Name"
-                            {...register('name', { required: 'Name is required!', maxLength: 15, })}
+                            {...register('displayName', { required: 'Name is required!', maxLength: 15, })}
 
                         />
                         {
@@ -116,21 +153,23 @@ const Register = () => {
                     <input
                         className="btn w-full cursor-pointer mt-7 mb-3"
                         type="submit"
-                        value="Login"
+                        value="Register"
                     />
                     <p className="text-center">Already have an account? <Link className="text-secondary underline" to='/login'>Login</Link></p>
                 </form>
                 {/*//* -------Form end-------- */}
 
                 <div className="lg:px-12">
+                    {/*//* Divider Start */}
                     {/* ---------Or--------- */}
                     <div className="flex gap-2 items-center my-5 justify-center">
                         <div className="border w-full"></div>
                         <div>Or</div>
                         <div className="border w-full"></div>
                     </div>
+                    {/*//* Divider End */}
 
-                    {/*//? ------Social Login------ */}
+                    {/*//? ------Social Login Start------ */}
                     <div className="space-y-3">
                         {/* Facebook Button*/}
                         <button
@@ -150,6 +189,7 @@ const Register = () => {
                             <span className="flex-1">Continue with Google</span>
                         </button>
                     </div>
+                    {/*//? ------Social Login End------ */}
                 </div>
             </div>
         </div>

@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import auth from "../../firebase.init";
 import { useAuthState, useSignInWithEmailAndPassword, useSignInWithFacebook, useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { toast } from "react-hot-toast";
+import useAdmin from "../../hooks/useAdmin";
 
 const Login = () => {
     const [currentUser, currentUserLoading, currentUserError] = useAuthState(auth);
@@ -18,6 +19,7 @@ const Login = () => {
 
     //* Create user with Facebook
     const [signInWithFacebook, facebookUser, facebookLoading, facebookError] = useSignInWithFacebook(auth);
+    const [adminLoading, setAdminLoading] = useAdmin(user?.email);
     const wrongPassword = error?.message.includes('wrong-password');
     const userNotFound = error?.message.includes('user-not-found');
 
@@ -28,6 +30,7 @@ const Login = () => {
 
     if (currentUser) {
         navigate(from, { replace: true });
+        setAdminLoading(false);
     }
     console.log(currentUser);
     if (error) {
@@ -95,6 +98,7 @@ const Login = () => {
                         <div>Or</div>
                         <div className="border w-full"></div>
                     </div>
+
                     {/* ------Social Login------ */}
                     <div className="space-y-3">
                         {/* Facebook */}

@@ -1,14 +1,20 @@
 import { useParams } from "react-router-dom";
-import { serviceData } from "../../../../public/serviceData";
 import credit_card from '../../../assets/Icon/credit_card.png'
 import paypal from '../../../assets/Icon/paypal.png'
+import { useEffect, useState } from "react";
 
 const Payment = () => {
     const { id: paramsId } = useParams();
-    console.log(paramsId);
+    const [cart, setCart] = useState({});
+    useEffect(() => {
+        fetch(`http://localhost:5000/cart/${paramsId}`)
+            .then(res => res.json())
+            .then(data => {
+                setCart(data);
+            })
+    }, [])
 
-    const serviceInfo = serviceData.find((service) => service._id == paramsId);
-    const { title, price } = serviceInfo;
+    const { title, price } = cart;
     return (
         <div className="lg:px-5 px-3">
             <h1 className="text-2xl font-bold text-primary">Payment</h1>

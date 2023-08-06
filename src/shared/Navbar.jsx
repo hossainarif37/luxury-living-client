@@ -5,10 +5,12 @@ import { useContext } from 'react';
 import { Menu } from '../ContextAPI/ContextAPI';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import auth from '../firebase.init';
+import useAdmin from '../hooks/useAdmin';
 const Navbar = () => {
     const [user] = useAuthState(auth);
     const [signOut] = useSignOut(auth);
     const navigate = useNavigate();
+    const [isAdmin] = useAdmin(user?.email);
 
     // Get context provider value by using Context API
     const { navToggle, setNavToggle, drawerToggle, setDrawerToggle } = useContext(Menu);
@@ -27,7 +29,7 @@ const Navbar = () => {
         <li><a href='/#project'>Projects</a></li>
         <li><Link to='/contacts'>Contacts</Link></li>
         <li><Link to='/dashboard/cart'>Dashboard</Link></li>
-        <li><Link to='/admin/user-order'>Admin</Link></li>
+        {(user && isAdmin) && <li><Link to='/admin/user-order'>Admin</Link></li>}
     </>
 
     return (

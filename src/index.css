@@ -7,6 +7,16 @@ body {
     /* font-family: 'Poppins', sans-serif; */
 }
 
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 @layer components {
     .btn {
         @apply text-white bg-[#251D58] px-10 py-2 rounded-md transition-all

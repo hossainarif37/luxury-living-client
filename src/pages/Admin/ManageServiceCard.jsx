@@ -1,13 +1,8 @@
-import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
-import auth from "../../firebase.init";
 
-const ServiceCard = ({ serviceData, index, cartStyles, editService }) => {
-    const [user] = useAuthState(auth);
+const ManageServiceCard = () => {
     const { _id, img, title, description, price } = serviceData;
 
-    //* Added to Cart
     const handleAddedToCart = () => {
 
         //* Add a cart in database
@@ -38,8 +33,6 @@ const ServiceCard = ({ serviceData, index, cartStyles, editService }) => {
 
 
     }
-
-    //* Deleted a Service
     const handleServiceDelete = () => {
         fetch(`http://localhost:5000/services?id=${_id}`, {
             method: 'DELETE'
@@ -47,14 +40,12 @@ const ServiceCard = ({ serviceData, index, cartStyles, editService }) => {
             .then(res => res.json())
             .then(data => {
                 if (data.deletedCount) {
-                    // refetch();
+                    refetch();
                     toast.success('Service deleted successfully!');
                 }
             })
 
     }
-
-
 
     return (
         <div className={`${index === 1 && 'shadow-lg' || editService && 'shadow-lg'} text-sm rounded-xl text-center p-5`}>
@@ -76,20 +67,18 @@ const ServiceCard = ({ serviceData, index, cartStyles, editService }) => {
 
                 {/* Manage Service Button */}
                 {/*//* Edit Button */}
-                {editService &&
-                    <Link to={`/admin/manage-services/edit-service/${_id}`}
-                        className="btn bg-amber-500 font-semibold px-5 w-full"
-                    >Edit</Link>}
+                <Link to={`/admin/manage-services/edit-service/${_id}`}
+                    className="btn bg-amber-500 font-semibold px-5 w-full"
+                >Edit</Link>
                 {/*//* Delete Button */}
-                {editService &&
-                    <button
-                        className="btn bg-red-600 font-semibold px-5 w-full"
-                        onClick={handleServiceDelete}
-                    >Delete</button>}
+                <button
+                    className="btn bg-red-600 font-semibold px-5 w-full"
+                    onClick={handleServiceDelete}
+                >Delete</button>
 
             </div>
         </div>
     );
 };
 
-export default ServiceCard;
+export default ManageServiceCard;

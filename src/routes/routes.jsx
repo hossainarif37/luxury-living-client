@@ -15,6 +15,8 @@ import AddService from "../pages/Admin/AddService";
 import ManageServices from "../pages/Admin/ManageServices";
 import MakeAdmin from "../pages/Admin/MakeAdmin";
 import PrivateRoute from "./PrivateRoute";
+import EditService from "../pages/Admin/EditService";
+import RequireAdmin from "./RequireAdmin";
 
 export const router = createBrowserRouter([
     {
@@ -65,7 +67,7 @@ export const router = createBrowserRouter([
             // Admin Start
             {
                 path: '/admin',
-                element: <Admin />,
+                element: <RequireAdmin> <Admin /></RequireAdmin>,
                 children: [
                     {
                         path: 'user-order',
@@ -82,6 +84,10 @@ export const router = createBrowserRouter([
                     {
                         path: 'make-admin',
                         element: < MakeAdmin />,
+                    },
+                    {
+                        path: 'manage-services/edit-service/:id',
+                        element: < EditService />,
                     },
                 ]
             }
