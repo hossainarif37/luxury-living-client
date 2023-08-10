@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { useParams } from "react-router-dom";
+import Loading from "../../components/Loading";
 
 const EditService = () => {
     const [customError, setCustomError] = useState('');
@@ -21,12 +22,12 @@ const EditService = () => {
     }
 
     const { data, isError, error, isLoading, refetch } = useQuery({
-        queryKey: ['services'],
+        queryKey: ['id'],
         queryFn: () => fetch(`http://localhost:5000/services/${id}`)
             .then(res => res.json())
     })
     if (isLoading) {
-        return <p>loading...</p>
+        return <Loading />
     }
     if (isError || error) {
         console.log(isError && isError, error && error);
@@ -128,7 +129,7 @@ const EditService = () => {
                     customError && <p className='error'>{customError}</p>
                 }
                 {/* Update Button */}
-                <input type="submit" value="Update" className='btn mt-3' />
+                <input type="submit" value="Update" className='btn mt-3 cursor-pointer' />
 
             </form>
         </div>

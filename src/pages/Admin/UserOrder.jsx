@@ -1,9 +1,38 @@
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../../components/Loading";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 const UserOrder = () => {
-    const tableArr = [];
-    for (let index = 0; index < 10; index++) {
-        tableArr.push(index);
+    const { data: orders, isLoading, isError, refetch } = useQuery({
+        queryKey: ['usersOrder'],
+        queryFn: () => fetch('http://localhost:5000/orders')
+            .then(res => res.json())
+    })
+
+    if (isLoading) {
+        return <Loading />
     }
+
+    const handleDeliveryStatus = (e, orderId) => {
+        fetch(`http://localhost:5000/orders?id=${orderId}`, {
+            method: 'PATCH',
+            body: JSON.stringify({
+                deliveryStatus: e.target.value,
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.modifiedCount) {
+                    refetch();
+                    toast.success('Delivery Status Updated')
+                }
+            });
+    }
+
     return (
         <div className="overflow-x-auto py-3 lg:px-5 lg:mr-10 rounded-2xl bg-white">
             <table className="w-full text-left">
@@ -20,17 +49,26 @@ const UserOrder = () => {
                 {/* -------body------- */}
                 <tbody className="space-y-10">
                     {
-                        tableArr.map((i) => <>
-                            <tr className="flex justify-between  space-x-5 px-5 text-xs lg:text-sm ">
-                                <td className="flex-1">Md Arif</td>
-                                <td className="flex-1 ">onexboy<br className="lg:hidden" />arif6833<br className="lg:hidden" />@gmail<br className="lg:hidden" />.com</td>
-                                <td className="flex-1 lg:ml-10">Office Interior Design</td>
-                                <td className="flex-1">Credit Card</td>
+                        orders.map(({ _id, userName, email, title, deliveryStatus, paymentMethod }) => <>
+                            <tr
+                                className="flex justify-between  space-x-5 px-5 text-xs lg:text-sm"
+                                key={_id}
+                            >
+                                <td className="flex-1">{userName}</td>
+                                <td className="flex-1 ">{email}</td>
+                                <td className="flex-1 lg:ml-10">{title}</td>
+                                <td className="flex-1">{paymentMethod}</td>
                                 <td className="flex-1">
-                                    <select className="bg-white" name="" id="">
-                                        <option value="">Pending</option>
-                                        <option value="">On going</option>
-                                        <option value="">Done</option>
+                                    <select
+                                        className="bg-white"
+                                        name="deliveryStatus"
+                                        id=""
+                                        defaultValue={deliveryStatus}
+                                        // value={deliveryStatus}
+                                        onChange={(e) => handleDeliveryStatus(e, _id)}>
+                                        <option value="Pending">Pending</option>
+                                        <option value="On going">On going</option>
+                                        <option value="Done">Done</option>
                                     </select>
                                 </td>
                             </tr>

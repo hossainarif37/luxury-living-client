@@ -120,7 +120,7 @@ const AddService = () => {
                     customError && <p className='error'>{customError}</p>
                 }
                 {/* Submit Button */}
-                <input type="submit" value="Submit" className='btn mt-3' />
+                <input type="submit" value="Add Service" className='btn mt-3 cursor-pointer' />
 
             </form>
         </div>

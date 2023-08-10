@@ -6,9 +6,14 @@ import auth from "../../firebase.init";
 import { useAuthState, useSignInWithEmailAndPassword, useSignInWithFacebook, useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { toast } from "react-hot-toast";
 import useAdmin from "../../hooks/useAdmin";
+import { useContext, useState } from "react";
+import { Menu } from "../../ContextAPI/ContextAPI";
+import Loading from "../../components/Loading";
 
 const Login = () => {
     const [currentUser, currentUserLoading, currentUserError] = useAuthState(auth);
+    const [databaseLoading, setDatabaseLoading] = useState(false);
+    const { setCustomLoading } = useContext(Menu);
     const location = useLocation();
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -19,28 +24,61 @@ const Login = () => {
 
     //* Create user with Facebook
     const [signInWithFacebook, facebookUser, facebookLoading, facebookError] = useSignInWithFacebook(auth);
-    const [adminLoading, setAdminLoading] = useAdmin(user?.email);
+    const [isAdmin, adminLoading, setAdminLoading] = useAdmin(user?.email);
     const wrongPassword = error?.message.includes('wrong-password');
     const userNotFound = error?.message.includes('user-not-found');
 
     let from = location.state?.from?.pathname || "/";
-    if (currentUserLoading || loading || googleLoading) {
-        return <p>loading...</p>
+    if (currentUserLoading || loading || googleLoading || databaseLoading) {
+        return <Loading />
+    }
+    // if (currentUser) {
+    //     // setAdminLoading(prev => !prev);
+    //     navigate(from, { replace: true });
+    // }
+
+    //* Google SignIn
+    const handleGoogleSignIn = async () => {
+        const gUser = await signInWithGoogle();
+
+        if (gUser) {
+            //* Save User Data in Database: (userName, email, role)
+            fetch('http://localhost:5000/users', {
+                method: 'POST',
+                body: JSON.stringify({
+                    userName: gUser.user.displayName,
+                    email: gUser.user.email,
+                    role: 'user'
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.acknowledged) {
+                        setDatabaseLoading(prev => !prev);
+                        navigate(from, { replace: true });
+                        toast.success('Login Successfully!');
+                    }
+                });
+
+        }
     }
 
-    if (currentUser) {
-        navigate(from, { replace: true });
-        setAdminLoading(false);
-    }
-    console.log(currentUser);
     if (error) {
         console.log(error.message);
     }
-    const handleRegister = (data) => {
-        signInWithEmailAndPassword(data.email, data.password);
+
+    //* SignIn with Email and Password
+    const handleSignIn = async (data) => {
+        setAdminLoading(prev => !prev);
+        const signInUser = await signInWithEmailAndPassword(data.email, data.password);
         reset();
-        if (user) {
-            toast.success('Login Succesfully!')
+        if (signInUser) {
+            setAdminLoading(prev => !prev);
+            navigate(from, { replace: true });
+            toast.success('Login Succesfully!');
         }
     }
 
@@ -48,7 +86,7 @@ const Login = () => {
         <div className="py-10 px-3 lg:px-0 h-screen">
             <div className="lg:w-2/5 mx-auto px-2 lg:px-12 py-10 rounded-xl lg:shadow-lg">
                 {/* -------Form start-------- */}
-                <form onSubmit={handleSubmit(handleRegister)}>
+                <form onSubmit={handleSubmit(handleSignIn)}>
                     <div className="space-y-5">
                         <h1 className="text-center text-2xl font-bold">Login</h1>
                         {/* Email */}
@@ -99,9 +137,9 @@ const Login = () => {
                         <div className="border w-full"></div>
                     </div>
 
-                    {/* ------Social Login------ */}
+                    {/*//? ------Social Login------ */}
                     <div className="space-y-3">
-                        {/* Facebook */}
+                        {/*//* Facebook */}
                         <button
                             className="flex active:scale-95 transition-all border w-full p-2 rounded-3xl"
                             onClick={() => signInWithFacebook()}
@@ -109,10 +147,11 @@ const Login = () => {
                             <span className="w-7  h-7 flex justify-center items-center rounded-full text-white  bg-[#3076FF]"><BiLogoFacebook className="" /></span>
                             <span className="flex-1">Continue with Facebook</span>
                         </button>
-                        {/* Google */}
+
+                        {/*//* Google */}
                         <button
                             className="flex active:scale-95 transition-all border w-full p-2 rounded-3xl"
-                            onClick={() => signInWithGoogle()}
+                            onClick={handleGoogleSignIn}
                         >
                             <img className="w-7 h-7" src={googleIcon} alt="google icon" />
                             <span className="flex-1">Continue with Google</span>

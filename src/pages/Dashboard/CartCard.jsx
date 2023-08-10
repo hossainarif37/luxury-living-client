@@ -9,16 +9,20 @@ const CartCard = ({ cartData, cartStyles, refetch }) => {
 
     //? Delete a cart
     const handleCartDelete = () => {
-        fetch(`http://localhost:5000/cart?id=${_id}&email=${user.email}`, {
-            method: 'DELETE'
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.deletedCount) {
-                    refetch()
-                    toast.success('Deleted Successfully!');
-                }
+        const confirmDelete = window.confirm();
+        console.log(confirmDelete);
+        if (confirmDelete) {
+            fetch(`http://localhost:5000/cart?id=${_id}`, {
+                method: 'DELETE'
             })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.deletedCount) {
+                        refetch()
+                        toast.success('Deleted Successfully!');
+                    }
+                })
+        }
     }
 
     return (
@@ -37,7 +41,7 @@ const CartCard = ({ cartData, cartStyles, refetch }) => {
                 {<button
                     className={`btn bg-red-600 ${!cartStyles && 'w-full px-5 '}`}
                     onClick={handleCartDelete}
-                >Delete</button>}
+                >Remove</button>}
             </div>
         </div>
     );

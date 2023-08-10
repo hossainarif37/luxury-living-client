@@ -10,26 +10,34 @@ const Navbar = () => {
     const [user] = useAuthState(auth);
     const [signOut] = useSignOut(auth);
     const navigate = useNavigate();
+    const location = useLocation();
+
     const [isAdmin] = useAdmin(user?.email);
+
+
 
     // Get context provider value by using Context API
     const { navToggle, setNavToggle, drawerToggle, setDrawerToggle } = useContext(Menu);
 
     // Location Start
-    const location = useLocation();
     const isDashboard = location.pathname.includes('dashboard');
     const isAdminPage = location.pathname.includes('admin');
     const authPage = location.pathname.includes('login') || location.pathname.includes('register') || isDashboard || isAdminPage ? 'bg-white' : 'bg-[#F6F6F6]';
     // Location End
 
+    const handleAchorLink = async (e, hashroute) => {
+        e.preventDefault();
+        await navigate('/');
+        window.location.hash = hashroute;
+    }
     // Menu Items
     const menuItems = <>
         <li><Link to='/'>Home</Link></li>
-        <li><Link to='/about'>About Us</Link></li>
-        <li><a href='/#project'>Projects</a></li>
+        <li><a href='' onClick={(e) => handleAchorLink(e, 'services')}>Services</a></li>
+        <li><a href='' onClick={(e) => handleAchorLink(e, 'project')}>Projects</a></li>
         <li><Link to='/contacts'>Contacts</Link></li>
-        <li><Link to='/dashboard/cart'>Dashboard</Link></li>
-        {(user && isAdmin) && <li><Link to='/admin/user-order'>Admin</Link></li>}
+        {(user && isAdmin) ? <li><Link to='/admin/user-order'>Admin</Link></li> : <li><Link to='/dashboard/cart'>Dashboard</Link></li>
+        }
     </>
 
     return (

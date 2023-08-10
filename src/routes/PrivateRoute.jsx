@@ -1,12 +1,13 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../firebase.init";
 import { Navigate, useLocation } from "react-router-dom";
+import Loading from "../components/Loading";
 
 const PrivateRoute = ({ children }) => {
     const [user, loading, error] = useAuthState(auth);
     const location = useLocation();
     if (loading) {
-        return <p>loading...</p>
+        return <Loading />
     }
     if (error) {
         console.log(error);

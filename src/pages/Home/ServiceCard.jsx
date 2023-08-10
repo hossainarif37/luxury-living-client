@@ -3,7 +3,7 @@ import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import auth from "../../firebase.init";
 
-const ServiceCard = ({ serviceData, index, cartStyles, editService }) => {
+const ServiceCard = ({ serviceData, index, cartStyles, editService, refetch }) => {
     const [user] = useAuthState(auth);
     const { _id, img, title, description, price } = serviceData;
 
@@ -47,7 +47,7 @@ const ServiceCard = ({ serviceData, index, cartStyles, editService }) => {
             .then(res => res.json())
             .then(data => {
                 if (data.deletedCount) {
-                    // refetch();
+                    refetch();
                     toast.success('Service deleted successfully!');
                 }
             })

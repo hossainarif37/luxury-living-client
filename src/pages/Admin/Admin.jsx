@@ -13,7 +13,7 @@ const Admin = () => {
 
         <li><Link to='manage-services' className="flex gap-3 items-center" ><RxDashboard className="text-xl text-[#878787] " />Manage Services</Link></li>
 
-        <li><Link to='make-admin' className="flex gap-3 items-center" ><BiUserPlus className="text-2xl text-[#878787] " />Make Admin</Link></li>
+        <li><Link to='manage-users' className="flex gap-3 items-center" ><BiUserPlus className="text-2xl text-[#878787] " />Manage Users</Link></li>
 
     </>
     return (

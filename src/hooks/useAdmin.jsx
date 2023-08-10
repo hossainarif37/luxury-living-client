@@ -24,7 +24,7 @@ const useAdmin = (email) => {
                 })
         }
     }, [email])
-    return [isAdmin, adminLoading]
+    return [isAdmin, adminLoading, setAdminLoading]
 };
 
 export default useAdmin;

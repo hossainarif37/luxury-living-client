@@ -2,6 +2,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import auth from "../../firebase.init";
 import CartCard from "./CartCard";
 import { useQuery } from "@tanstack/react-query";
+import Loading from '../../components/Loading';
 
 const Cart = () => {
     const [user] = useAuthState(auth);
@@ -14,7 +15,7 @@ const Cart = () => {
     })
 
     if (isLoading) {
-        return <p>loading...</p>
+        return <Loading />
     }
     if (isError || error) {
         console.log(isError && isError, error && error);

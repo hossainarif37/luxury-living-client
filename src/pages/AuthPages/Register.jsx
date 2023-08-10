@@ -6,6 +6,7 @@ import auth from "../../firebase.init";
 import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithFacebook, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { toast } from "react-hot-toast";
 import { useState } from "react";
+import Loading from "../../components/Loading";
 
 const Register = () => {
     const [customError, setCustomError] = useState('');
@@ -33,7 +34,7 @@ const Register = () => {
     const emailAlreadyUsed = error?.message.includes('email-already-in-use');
 
     if (loading || googleLoading || facebookLoading || updating || currentUserLoading || databaseLoading) {
-        return <p>loading...</p>
+        return <Loading />
     }
 
 

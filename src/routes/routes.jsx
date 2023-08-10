@@ -13,10 +13,12 @@ import Admin from "../pages/Admin/Admin";
 import UserOrder from "../pages/Admin/UserOrder";
 import AddService from "../pages/Admin/AddService";
 import ManageServices from "../pages/Admin/ManageServices";
-import MakeAdmin from "../pages/Admin/MakeAdmin";
 import PrivateRoute from "./PrivateRoute";
 import EditService from "../pages/Admin/EditService";
 import RequireAdmin from "./RequireAdmin";
+import RequireDashboard from "./RequireDashboard";
+import ManageUsers from "../pages/Admin/ManageUsers";
+
 
 export const router = createBrowserRouter([
     {
@@ -42,7 +44,7 @@ export const router = createBrowserRouter([
             // Dashboard Start
             {
                 path: '/dashboard',
-                element: <PrivateRoute><Dashboard /></PrivateRoute>,
+                element: <PrivateRoute><RequireDashboard><Dashboard /></RequireDashboard></PrivateRoute>,
                 children: [
                     {
                         path: 'cart',
@@ -82,8 +84,8 @@ export const router = createBrowserRouter([
                         element: < ManageServices />,
                     },
                     {
-                        path: 'make-admin',
-                        element: < MakeAdmin />,
+                        path: 'manage-users',
+                        element: < ManageUsers />,
                     },
                     {
                         path: 'manage-services/edit-service/:id',
