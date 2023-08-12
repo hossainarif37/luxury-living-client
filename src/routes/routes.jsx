@@ -18,12 +18,14 @@ import EditService from "../pages/Admin/EditService";
 import RequireAdmin from "./RequireAdmin";
 import RequireDashboard from "./RequireDashboard";
 import ManageUsers from "../pages/Admin/ManageUsers";
+import ErrorElement from "../pages/ErrorElement/ErrorElement";
 
 
 export const router = createBrowserRouter([
     {
         path: '/',
         element: <App />,
+        errorElement: <ErrorElement />,
         children: [
             {
                 path: '',
