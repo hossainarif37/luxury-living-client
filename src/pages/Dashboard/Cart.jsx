@@ -10,7 +10,7 @@ const Cart = () => {
     //* Get all cart of this user by using Tanstack Query
     const { isLoading, isError, data, error, refetch } = useQuery({
         queryKey: ['email'],
-        queryFn: () => fetch(`http://localhost:5000/cart?email=${user.email}`)
+        queryFn: () => fetch(`https://luxury-living-server-three.vercel.app/cart?email=${user.email}`)
             .then(res => res.json())
     })
 

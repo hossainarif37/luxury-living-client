@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 const UserOrder = () => {
     const { data: orders, isLoading, isError, refetch } = useQuery({
         queryKey: ['usersOrder'],
-        queryFn: () => fetch('http://localhost:5000/orders')
+        queryFn: () => fetch('https://luxury-living-server-three.vercel.app/orders')
             .then(res => res.json())
     })
 
@@ -15,7 +15,7 @@ const UserOrder = () => {
     }
 
     const handleDeliveryStatus = (e, orderId) => {
-        fetch(`http://localhost:5000/orders?id=${orderId}`, {
+        fetch(`https://luxury-living-server-three.vercel.app/orders?id=${orderId}`, {
             method: 'PATCH',
             body: JSON.stringify({
                 deliveryStatus: e.target.value,

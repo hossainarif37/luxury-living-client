@@ -11,7 +11,7 @@ const ServiceCard = ({ serviceData, index, cartStyles, editService, refetch }) =
     const handleAddedToCart = () => {
 
         //* Add a cart in database
-        fetch('http://localhost:5000/cart', {
+        fetch('https://luxury-living-server-three.vercel.app/cart', {
             method: 'POST',
             body: JSON.stringify(
                 {
@@ -41,7 +41,8 @@ const ServiceCard = ({ serviceData, index, cartStyles, editService, refetch }) =
 
     //* Deleted a Service
     const handleServiceDelete = () => {
-        fetch(`http://localhost:5000/services?id=${_id}`, {
+
+        fetch(`https://luxury-living-server-three.vercel.app/services?id=${_id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())
@@ -77,7 +78,7 @@ const ServiceCard = ({ serviceData, index, cartStyles, editService, refetch }) =
                 {/* Manage Service Button */}
                 {/*//* Edit Button */}
                 {editService &&
-                    <Link to={`/admin/manage-services/edit-service/${_id}`}
+                    <Link onClick={() => refetch()} to={`/admin/manage-services/edit-service/${_id}`}
                         className="btn bg-amber-500 font-semibold px-5 w-full"
                     >Edit</Link>}
                 {/*//* Delete Button */}

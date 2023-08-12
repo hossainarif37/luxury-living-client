@@ -43,7 +43,7 @@ const Login = () => {
 
         if (gUser) {
             //* Save User Data in Database: (userName, email, role)
-            fetch('http://localhost:5000/users', {
+            fetch('https://luxury-living-server-three.vercel.app/users', {
                 method: 'POST',
                 body: JSON.stringify({
                     userName: gUser.user.displayName,

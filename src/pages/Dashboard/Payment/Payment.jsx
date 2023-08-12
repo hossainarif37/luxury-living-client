@@ -7,22 +7,25 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../components/Loading"
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../../firebase.init";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISH_KEY);
 
 const Payment = () => {
     const { id: paramsId } = useParams();
+    const [user, userLoading] = useAuthState(auth);
     const [cardError, setCardError] = useState('');
     const [transactionId, setTransactionId] = useState('');
     const [paymentMethod, setPaymentMethod] = useState('');
     console.log(paymentMethod);
     const { data: cart, isLoading, isError, refetch } = useQuery({
         queryKey: ['paramsId'],
-        queryFn: () => fetch(`http://localhost:5000/cart/${paramsId}`)
+        queryFn: () => fetch(`https://luxury-living-server-three.vercel.app/cart/${paramsId}`)
             .then(res => res.json())
     })
 
-    if (isLoading) {
+    if (isLoading || userLoading) {
         return <Loading />
     }
     if (isError) {
@@ -36,8 +39,8 @@ const Payment = () => {
             {/* ---------Form--------- */}
             <div className="lg:w-1/2 mt-7">
                 <div className="space-y-3">
-                    <input className="input text-gray-700 bg-white" type="text" value='Md Arif' disabled />
-                    <input className="input text-gray-700 bg-white" type="email" value='onexboyarif6833@gmail.com' disabled />
+                    <input className="input text-gray-700 bg-white" type="text" value={user?.displayName} disabled />
+                    <input className="input text-gray-700 bg-white" type="email" value={user?.email} disabled />
                     <input className="input text-gray-700 bg-white" type="text" value={title} disabled />
                 </div>
 

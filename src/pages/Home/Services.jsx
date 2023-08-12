@@ -7,7 +7,7 @@ import Loading from '../../components/Loading';
 const Services = () => {
     const { data: serviceData, isLoading, isError } = useQuery({
         queryKey: ['services'],
-        queryFn: () => fetch('http://localhost:5000/services/')
+        queryFn: () => fetch('https://luxury-living-server-three.vercel.app/services/')
             .then(res => res.json())
     })
 

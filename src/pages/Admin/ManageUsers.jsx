@@ -5,7 +5,7 @@ import Loading from "../../components/Loading";
 const ManageUsers = () => {
     const { data, isLoading, isError, refetch } = useQuery({
         queryKey: ['user'],
-        queryFn: () => fetch('http://localhost:5000/users')
+        queryFn: () => fetch('https://luxury-living-server-three.vercel.app/users')
             .then(res => res.json())
     })
     if (isLoading) {
@@ -15,7 +15,7 @@ const ManageUsers = () => {
         console.log(isError);
     }
     const handleUpdateAdmin = ({ email, role }) => {
-        fetch(`http://localhost:5000/users?email=${email}`, {
+        fetch(`https://luxury-living-server-three.vercel.app/users?email=${email}`, {
             method: 'PATCH',
             body: JSON.stringify({
                 role: role

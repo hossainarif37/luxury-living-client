@@ -18,7 +18,7 @@ const CheckoutForm = ({ setCardError, price, setTransactionId, cart, paymentMeth
 
 
     useEffect(() => {
-        fetch('http://localhost:5000/create-payment-intent', {
+        fetch('https://luxury-living-server-three.vercel.app/create-payment-intent', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -90,7 +90,7 @@ const CheckoutForm = ({ setCardError, price, setTransactionId, cart, paymentMeth
                 deliveryStatus: "Pending",
                 paymentMethod: paymentMethod
             }
-            fetch('http://localhost:5000/orders', {
+            fetch('https://luxury-living-server-three.vercel.app/orders', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8',
@@ -101,7 +101,7 @@ const CheckoutForm = ({ setCardError, price, setTransactionId, cart, paymentMeth
                 .then(data => {
                     if (data.acknowledged) {
                         //! Delete this Item from Cart
-                        fetch(`http://localhost:5000/cart?id=${_id}`, {
+                        fetch(`https://luxury-living-server-three.vercel.app/cart?id=${_id}`, {
                             method: 'DELETE'
                         })
                             .then(res => res.json())

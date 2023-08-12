@@ -7,7 +7,7 @@ const ManageServices = () => {
     // const [data, setData] = useState([]);
 
     // useEffect(() => {
-    //     fetch('http://localhost:5000/services/')
+    //     fetch('https://luxury-living-server-three.vercel.app/services/')
     //         .then(res => res.json())
     //         .then(data => {
     //             setData(data);
@@ -15,8 +15,8 @@ const ManageServices = () => {
     // }, []);
 
     const { data, isError, error, isLoading, refetch } = useQuery({
-        queryKey: ['services'],
-        queryFn: () => fetch('http://localhost:5000/services/')
+        queryKey: ['service'],
+        queryFn: () => fetch('https://luxury-living-server-three.vercel.app/services/')
             .then(res => res.json())
     })
 
@@ -29,7 +29,7 @@ const ManageServices = () => {
     }
     return (
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-5 pt-5'>
-            {(data || []).map((services, index) => <ServiceCard
+            {data.map((services, index) => <ServiceCard
                 key={index}
                 serviceData={services}
                 editService={true}

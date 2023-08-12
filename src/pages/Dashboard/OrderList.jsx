@@ -8,7 +8,7 @@ const OrderList = () => {
     const [user] = useAuthState(auth);
     const { data: orders, isLoading, isError } = useQuery({
         queryKey: ['orders'],
-        queryFn: () => fetch(`http://localhost:5000/orders?email=${user.email}`)
+        queryFn: () => fetch(`https://luxury-living-server-three.vercel.app/orders?email=${user.email}`)
             .then(res => res.json())
     })
     if (isLoading) {

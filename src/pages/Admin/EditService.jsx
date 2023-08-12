@@ -12,6 +12,7 @@ const EditService = () => {
     const { id } = useParams();
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const handleBase64Image = (e) => {
+        reset();
         const reader = new FileReader();
         reader.onloadend = () => {
             setBase64Image(reader.result)
@@ -23,8 +24,11 @@ const EditService = () => {
 
     const { data, isError, error, isLoading, refetch } = useQuery({
         queryKey: ['id'],
-        queryFn: () => fetch(`http://localhost:5000/services/${id}`)
-            .then(res => res.json())
+        queryFn: async () => {
+            const res = await fetch(`https://luxury-living-server-three.vercel.app/services/${id}`)
+            return res.json();
+
+        }
     })
     if (isLoading) {
         return <Loading />
@@ -37,7 +41,7 @@ const EditService = () => {
     console.log(img);
     //* Update a Service
     const handleUpdateService = (data) => {
-        fetch(`http://localhost:5000/services?id=${id}`, {
+        fetch(`https://luxury-living-server-three.vercel.app/services?id=${id}`, {
             method: 'PATCH',
             body: JSON.stringify({
                 ...data,
