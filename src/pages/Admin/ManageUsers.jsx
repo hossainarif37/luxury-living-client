@@ -5,7 +5,7 @@ import Loading from "../../components/Loading";
 const ManageUsers = () => {
     const { data, isLoading, isError, refetch } = useQuery({
         queryKey: ['user'],
-        queryFn: () => fetch('https://luxury-living-server-34zq.onrender.com/users')
+        queryFn: () => fetch('https://luxury-living-server-production.up.railway.app/users')
             .then(res => res.json())
     })
     if (isLoading) {
@@ -15,7 +15,7 @@ const ManageUsers = () => {
         console.log(isError);
     }
     const handleUpdateAdmin = ({ email, role }) => {
-        fetch(`https://luxury-living-server-34zq.onrender.com/users?email=${email}`, {
+        fetch(`https://luxury-living-server-production.up.railway.app/users?email=${email}`, {
             method: 'PATCH',
             body: JSON.stringify({
                 role: role

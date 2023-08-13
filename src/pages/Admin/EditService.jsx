@@ -27,7 +27,7 @@ const EditService = () => {
     // const { data, isError, error, isLoading, refetch } = useQuery({
     //     queryKey: ['id'],
     //     queryFn: async () => {
-    //         const res = await fetch(`https://luxury-living-server-34zq.onrender.com/services/${id}`);
+    //         const res = await fetch(`https://luxury-living-server-production.up.railway.app/services/${id}`);
     //         return res.json();
 
     //     }
@@ -43,7 +43,7 @@ const EditService = () => {
     //* Individual service finding
 
     useEffect(() => {
-        fetch(`https://luxury-living-server-34zq.onrender.com/services/${id}`)
+        fetch(`https://luxury-living-server-production.up.railway.app/services/${id}`)
             .then(res => res.json())
             .then(data => {
                 setDataLoading(false);
@@ -58,7 +58,7 @@ const EditService = () => {
     console.log(img);
     //* Update a Service
     const handleUpdateService = (data) => {
-        fetch(`https://luxury-living-server-34zq.onrender.com/services?id=${id}`, {
+        fetch(`https://luxury-living-server-production.up.railway.app/services?id=${id}`, {
             method: 'PATCH',
             body: JSON.stringify({
                 ...data,

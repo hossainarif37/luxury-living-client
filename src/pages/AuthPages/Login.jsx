@@ -43,7 +43,7 @@ const Login = () => {
 
         if (gUser) {
             //* Save User Data in Database: (userName, email, role)
-            fetch('https://luxury-living-server-34zq.onrender.com/users', {
+            fetch('https://luxury-living-server-production.up.railway.app/users', {
                 method: 'POST',
                 body: JSON.stringify({
                     userName: gUser.user.displayName,

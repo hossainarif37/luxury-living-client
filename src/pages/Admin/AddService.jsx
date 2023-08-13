@@ -1,3 +1,4 @@
+import { data } from 'browserslist';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
@@ -5,9 +6,13 @@ import { AiOutlineCloudUpload } from 'react-icons/ai'
 
 const AddService = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const imgToken = import.meta.env.VITE_IMAGE_UPLOAD_TOKEN;
+    const imgHostUrl = `https://api.imgbb.com/1/upload?key=${imgToken}`
     const [customError, setCustomError] = useState('');
     const [base64Image, setBase64Image] = useState('');
-    const handleBase64Image = (e) => {
+    const [image, setImage] = useState('');
+    const handleBaseUrl = (e) => {
+        reset();
         const reader = new FileReader();
         reader.onloadend = () => {
             setBase64Image(reader.result)
@@ -15,37 +20,52 @@ const AddService = () => {
         reader.readAsDataURL(e.target.files[0]);
         //? Set custom error empty!
         setCustomError('');
+
+
     }
-    console.log(base64Image.length);
 
     //* Add service function
     const handleAddService = (data) => {
+        const formData = new FormData();
+        formData.append('image', data.image[0]);
 
-        //* Add a service in database
-        if (base64Image) {
-            fetch('https://luxury-living-server-34zq.onrender.com/services', {
+
+        if (formData) {
+            fetch(imgHostUrl, {
                 method: 'POST',
-                body: JSON.stringify({
-                    ...data,
-                    img: base64Image
-                }),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                },
+                body: formData
             })
-                .then((res) => res.json())
-                .then((data) => {
-                    if (data.acknowledged) {
-                        toast.success('Service added!');
-                        setBase64Image('');
-                        reset();
-                    }
-                    console.log(data);
-                });
+                .then(res => res.json())
+                .then(imgResponse => {
+                    setImage(imgResponse.data.display_url);
+                })
         }
-        else {
-            setCustomError('Image field is required! Please upload a image.')
-        }
+
+        // //* Add a service in database
+        // if (image) {
+        //     fetch('https://luxury-living-server-production.up.railway.app/services', {
+        //         method: 'POST',
+        //         body: JSON.stringify({
+
+        //             img: image
+        //         }),
+        //         headers: {
+        //             'Content-type': 'application/json; charset=UTF-8',
+        //         },
+        //     })
+        //         .then((res) => res.json())
+        //         .then((data) => {
+        //             if (data.acknowledged) {
+        //                 toast.success('Service added!');
+        //                 setImage('');
+        //                 reset();
+        //             }
+        //             console.log(data);
+        //         });
+        // }
+        // else {
+        //     setCustomError('Image field is required! Please upload a image.')
+        // }
     }
 
     return (
@@ -108,14 +128,19 @@ const AddService = () => {
                         <AiOutlineCloudUpload className='text-2xl' />
                         <span className='text-secondary'>Upload Image</span>
                         <input
-                            onChange={(e) => handleBase64Image(e)}
+                            onChange={(e) => handleBaseUrl(e)}
                             className="absolute inset-0 opacity-0"
                             type="file"
                             accept='.jpeg, .png, .jpg'
+                            {...register('image', { required: 'Image is required!' })}
+
                         />
 
                     </div>
                 </div>
+                {
+                    errors?.image?.type === 'required' && <p className='error'>{errors.image.message}</p>
+                }
                 {
                     customError && <p className='error'>{customError}</p>
                 }

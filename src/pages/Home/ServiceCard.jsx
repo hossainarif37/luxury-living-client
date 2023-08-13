@@ -11,7 +11,7 @@ const ServiceCard = ({ serviceData, index, cartStyles, editService, refetch }) =
     const handleAddedToCart = () => {
 
         //* Add a cart in database
-        fetch('https://luxury-living-server-34zq.onrender.com/cart', {
+        fetch('https://luxury-living-server-production.up.railway.app/cart', {
             method: 'POST',
             body: JSON.stringify(
                 {
@@ -42,7 +42,7 @@ const ServiceCard = ({ serviceData, index, cartStyles, editService, refetch }) =
     //* Deleted a Service
     const handleServiceDelete = () => {
 
-        fetch(`https://luxury-living-server-34zq.onrender.com/services?id=${_id}`, {
+        fetch(`https://luxury-living-server-production.up.railway.app/services?id=${_id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())

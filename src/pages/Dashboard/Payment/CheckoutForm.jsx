@@ -18,7 +18,7 @@ const CheckoutForm = ({ setCardError, price, setTransactionId, cart, paymentMeth
 
 
     useEffect(() => {
-        fetch('https://luxury-living-server-34zq.onrender.com/create-payment-intent', {
+        fetch('https://luxury-living-server-production.up.railway.app/create-payment-intent', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -90,7 +90,7 @@ const CheckoutForm = ({ setCardError, price, setTransactionId, cart, paymentMeth
                 deliveryStatus: "Pending",
                 paymentMethod: paymentMethod
             }
-            fetch('https://luxury-living-server-34zq.onrender.com/orders', {
+            fetch('https://luxury-living-server-production.up.railway.app/orders', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8',
@@ -101,7 +101,7 @@ const CheckoutForm = ({ setCardError, price, setTransactionId, cart, paymentMeth
                 .then(data => {
                     if (data.acknowledged) {
                         //! Delete this Item from Cart
-                        fetch(`https://luxury-living-server-34zq.onrender.com/cart?id=${_id}`, {
+                        fetch(`https://luxury-living-server-production.up.railway.app/cart?id=${_id}`, {
                             method: 'DELETE'
                         })
                             .then(res => res.json())

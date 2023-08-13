@@ -8,7 +8,7 @@ const OrderList = () => {
     const [user] = useAuthState(auth);
     const { data: orders, isLoading, isError } = useQuery({
         queryKey: ['orders'],
-        queryFn: () => fetch(`https://luxury-living-server-34zq.onrender.com/orders?email=${user.email}`)
+        queryFn: () => fetch(`https://luxury-living-server-production.up.railway.app/orders?email=${user.email}`)
             .then(res => res.json())
     })
     if (isLoading) {

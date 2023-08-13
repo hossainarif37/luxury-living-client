@@ -9,7 +9,7 @@ const useAdmin = (email) => {
     const [adminLoading, setAdminLoading] = useState(true);
     useEffect(() => {
         if (email) {
-            fetch(`https://luxury-living-server-34zq.onrender.com/user?email=${email}`)
+            fetch(`https://luxury-living-server-production.up.railway.app/user?email=${email}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.role === 'admin') {

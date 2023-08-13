@@ -10,7 +10,7 @@ const Cart = () => {
     //* Get all cart of this user by using Tanstack Query
     const { isLoading, isError, data, error, refetch } = useQuery({
         queryKey: ['email'],
-        queryFn: () => fetch(`https://luxury-living-server-34zq.onrender.com/cart?email=${user.email}`)
+        queryFn: () => fetch(`https://luxury-living-server-production.up.railway.app/cart?email=${user.email}`)
             .then(res => res.json())
     })
 

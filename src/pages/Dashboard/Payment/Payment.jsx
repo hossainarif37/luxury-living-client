@@ -23,7 +23,7 @@ const Payment = () => {
     console.log(paymentMethod);
     const { data: cart, isLoading, isError, refetch } = useQuery({
         queryKey: ['paramsId'],
-        queryFn: () => fetch(`https://luxury-living-server-34zq.onrender.com/cart/${paramsId}`)
+        queryFn: () => fetch(`https://luxury-living-server-production.up.railway.app/cart/${paramsId}`)
             .then(res => res.json())
     })
 
