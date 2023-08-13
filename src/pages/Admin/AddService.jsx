@@ -23,7 +23,7 @@ const AddService = () => {
 
         //* Add a service in database
         if (base64Image) {
-            fetch('https://luxury-living-server-three.vercel.app/services', {
+            fetch('https://luxury-living-server-34zq.onrender.com/services', {
                 method: 'POST',
                 body: JSON.stringify({
                     ...data,

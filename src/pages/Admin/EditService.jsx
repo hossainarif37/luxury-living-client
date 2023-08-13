@@ -25,7 +25,7 @@ const EditService = () => {
     const { data, isError, error, isLoading, refetch } = useQuery({
         queryKey: ['id'],
         queryFn: async () => {
-            const res = await fetch(`https://luxury-living-server-three.vercel.app/services/${id}`)
+            const res = await fetch(`https://luxury-living-server-34zq.onrender.com/services/${id}`)
             return res.json();
 
         }
@@ -41,7 +41,7 @@ const EditService = () => {
     console.log(img);
     //* Update a Service
     const handleUpdateService = (data) => {
-        fetch(`https://luxury-living-server-three.vercel.app/services?id=${id}`, {
+        fetch(`https://luxury-living-server-34zq.onrender.com/services?id=${id}`, {
             method: 'PATCH',
             body: JSON.stringify({
                 ...data,

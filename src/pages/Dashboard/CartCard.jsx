@@ -12,7 +12,7 @@ const CartCard = ({ cartData, cartStyles, refetch }) => {
         const confirmDelete = window.confirm();
         console.log(confirmDelete);
         if (confirmDelete) {
-            fetch(`https://luxury-living-server-three.vercel.app/cart?id=${_id}`, {
+            fetch(`https://luxury-living-server-34zq.onrender.com/cart?id=${_id}`, {
                 method: 'DELETE'
             })
                 .then(res => res.json())

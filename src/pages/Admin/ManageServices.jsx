@@ -7,7 +7,7 @@ const ManageServices = () => {
     // const [data, setData] = useState([]);
 
     // useEffect(() => {
-    //     fetch('https://luxury-living-server-three.vercel.app/services/')
+    //     fetch('https://luxury-living-server-34zq.onrender.com/services/')
     //         .then(res => res.json())
     //         .then(data => {
     //             setData(data);
@@ -16,7 +16,7 @@ const ManageServices = () => {
 
     const { data, isError, error, isLoading, refetch } = useQuery({
         queryKey: ['service'],
-        queryFn: () => fetch('https://luxury-living-server-three.vercel.app/services/')
+        queryFn: () => fetch('https://luxury-living-server-34zq.onrender.com/services/')
             .then(res => res.json())
     })
 
