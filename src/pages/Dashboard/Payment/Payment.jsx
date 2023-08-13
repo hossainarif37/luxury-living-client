@@ -119,11 +119,11 @@ const Payment = () => {
                             {isCopied && <span className="absolute right-3 text-green-600 ">Copied!</span>}
                             <span
                                 onClick={handleCopy}
-                                className='text-secondary cursor-pointer text-2xl'
+                                className='cursor-pointer text-2xl text-green-600'
                             >
                                 {isCopied ? <BiSolidCopy /> : <BiCopy />}
                             </span>
-                            <span className="text-secondary">4242 4242 4242 4242</span>
+                            <span className="text-secondary"> 4242 4242 4242 4242</span>
                         </div>
                         <p className=""><span className="font-bold">MM/YY:</span> [Any Future Date]</p>
                         <p className=""><span className="font-bold">CVC:</span> [Any <span className="font-semibold">3</span> Digits]</p>

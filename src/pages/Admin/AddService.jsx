@@ -42,30 +42,29 @@ const AddService = () => {
         }
 
         // //* Add a service in database
-        // if (image) {
-        //     fetch('https://luxury-living-server-production.up.railway.app/services', {
-        //         method: 'POST',
-        //         body: JSON.stringify({
-
-        //             img: image
-        //         }),
-        //         headers: {
-        //             'Content-type': 'application/json; charset=UTF-8',
-        //         },
-        //     })
-        //         .then((res) => res.json())
-        //         .then((data) => {
-        //             if (data.acknowledged) {
-        //                 toast.success('Service added!');
-        //                 setImage('');
-        //                 reset();
-        //             }
-        //             console.log(data);
-        //         });
-        // }
-        // else {
-        //     setCustomError('Image field is required! Please upload a image.')
-        // }
+        if (image) {
+            fetch('https://luxury-living-server-production.up.railway.app/services', {
+                method: 'POST',
+                body: JSON.stringify({
+                    img: image
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.acknowledged) {
+                        toast.success('Service added!');
+                        setImage('');
+                        reset();
+                    }
+                    console.log(data);
+                });
+        }
+        else {
+            setCustomError('Image field is required! Please upload a image.')
+        }
     }
 
     return (
