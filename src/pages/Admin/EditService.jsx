@@ -9,6 +9,9 @@ import Loading from "../../components/Loading";
 const EditService = () => {
     const [customError, setCustomError] = useState('');
     const [base64Image, setBase64Image] = useState('');
+    const [data, setData] = useState({});
+    const [dataLoading, setDataLoading] = useState(true);
+
     const { id } = useParams();
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const handleBase64Image = (e) => {
@@ -21,20 +24,34 @@ const EditService = () => {
         //? Set custom error empty!
         setCustomError('');
     }
+    // const { data, isError, error, isLoading, refetch } = useQuery({
+    //     queryKey: ['id'],
+    //     queryFn: async () => {
+    //         const res = await fetch(`https://luxury-living-server-34zq.onrender.com/services/${id}`);
+    //         return res.json();
 
-    const { data, isError, error, isLoading, refetch } = useQuery({
-        queryKey: ['id'],
-        queryFn: async () => {
-            const res = await fetch(`https://luxury-living-server-34zq.onrender.com/services/${id}`)
-            return res.json();
+    //     }
+    // })
+    // if (isLoading) {
+    //     return <Loading />
+    // }
+    // if (isError || error) {
+    //     console.log(isError && isError, error && error);
+    // }
 
-        }
-    })
-    if (isLoading) {
+
+    //* Individual service finding
+
+    useEffect(() => {
+        fetch(`https://luxury-living-server-34zq.onrender.com/services/${id}`)
+            .then(res => res.json())
+            .then(data => {
+                setDataLoading(false);
+                setData(data);
+            })
+    }, [id])
+    if (dataLoading) {
         return <Loading />
-    }
-    if (isError || error) {
-        console.log(isError && isError, error && error);
     }
 
     const { title, price, description, img } = data;
