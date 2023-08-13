@@ -32,7 +32,7 @@ const Navbar = () => {
     }
     // Menu Items
     const menuItems = <>
-        <li><Link to='/'>Home</Link></li>
+        <li><a href='' onClick={(e) => handleAchorLink(e, 'home')}>Home</a></li>
         <li><a href='' onClick={(e) => handleAchorLink(e, 'services')}>Services</a></li>
         <li><a href='' onClick={(e) => handleAchorLink(e, 'project')}>Projects</a></li>
         <li><Link to='/contacts'>Contacts</Link></li>
