@@ -115,7 +115,7 @@ const CheckoutForm = ({ setCardError, price, setTransactionId, cart, paymentMeth
 
 
                         setTimeout(() => {
-                            navigate('/dashboard/cart')
+                            navigate('/dashboard/order-list')
                         }, 5000);
                     }
                 })

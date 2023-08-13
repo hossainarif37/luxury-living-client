@@ -1,11 +1,14 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
+import useAdmin from "../../hooks/useAdmin";
 
 const ServiceCard = ({ serviceData, index, cartStyles, editService, refetch }) => {
     const [user] = useAuthState(auth);
     const { _id, img, title, description, price } = serviceData;
+    const [isAdmin, adminLoading] = useAdmin(user?.email);
+    const navigate = useNavigate();
 
     //* Added to Cart
     const handleAddedToCart = () => {
@@ -69,11 +72,15 @@ const ServiceCard = ({ serviceData, index, cartStyles, editService, refetch }) =
                 {/*//* Add to Cart Button */}
                 {!editService &&
                     <button
-                        className="btn bg-amber-500 font-semibold px-5 w-full"
-                        onClick={handleAddedToCart}
+                        className={`btn bg-amber-500 font-semibold px-5 w-full ${isAdmin && 'bg-amber-200 active:scale-100'}`}
+                        onClick={user ? handleAddedToCart : () => navigate('/login')}
+                        disabled={isAdmin}
                     >Add to Cart</button>}
                 {/*//* Book Button */}
-                {!editService && <Link to={`/dashboard/cart/payment/${_id}`} className={`btn ${!cartStyles && 'w-full px-5 '}`}>Book</Link>}
+                {!editService && <Link to={!isAdmin && `/dashboard/cart/payment/${_id}`}
+                    className={`btn ${isAdmin && 'bg-gray-400 cursor-default active:scale-100'} ${!cartStyles && 'w-full px-5'}`}
+                    disabled={isAdmin}
+                >Book</Link>}
 
                 {/* Manage Service Button */}
                 {/*//* Edit Button */}

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import ServiceCard from "../Home/ServiceCard";
 import { useEffect, useState } from "react";
 import Loading from "../../components/Loading";
+import EmptyPage from "../../components/EmptyPage";
 
 const ManageServices = () => {
     // const [data, setData] = useState([]);
@@ -26,6 +27,9 @@ const ManageServices = () => {
 
     if (isError || error) {
         console.log(isError && isError, error && error);
+    }
+    if (data.length === 0) {
+        return <EmptyPage>Empty Service, Please add services!</EmptyPage>
     }
     return (
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-5 pt-5'>

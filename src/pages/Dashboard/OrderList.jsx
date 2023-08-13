@@ -3,6 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import Loading from "../../components/Loading";
 import OrderListCard from "./OrderListCard";
+import EmptyPage from "../../components/EmptyPage";
 
 const OrderList = () => {
     const [user] = useAuthState(auth);
@@ -14,6 +15,11 @@ const OrderList = () => {
     if (isLoading) {
         return <Loading />
     }
+
+    if (orders.length === 0) {
+        return <EmptyPage>Empty Orders, Please order a service!</EmptyPage>
+    }
+
     return (
         <div className="">
             <h1 className="text-2xl font-bold text-primary ">Order List</h1>

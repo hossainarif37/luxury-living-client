@@ -5,24 +5,38 @@ import { toast } from "react-hot-toast";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import Loading from "../../components/Loading";
+import BounceLoading from "../../components/BounceLoading";
 
 const EditService = () => {
     const [customError, setCustomError] = useState('');
-    const [base64Image, setBase64Image] = useState('');
+    const [imageLoading, setImageLoading] = useState(false);
+    const imgToken = import.meta.env.VITE_IMAGE_UPLOAD_TOKEN;
+    const imgHostUrl = `https://api.imgbb.com/1/upload?key=${imgToken}`
+    const [image, setImage] = useState('');
     const [data, setData] = useState({});
     const [dataLoading, setDataLoading] = useState(true);
 
     const { id } = useParams();
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const handleBase64Image = (e) => {
-        reset();
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setBase64Image(reader.result)
+
+    //* Upload the image to hosting server
+    const handleUploadImage = (e) => {
+        const formData = new FormData();
+        formData.append('image', e.target.files[0]);
+        if (formData) {
+            setImageLoading(true);
         }
-        reader.readAsDataURL(e.target.files[0]);
-        //? Set custom error empty!
-        setCustomError('');
+        fetch(imgHostUrl, {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(({ data: imageResponse }) => {
+                if (imageResponse.id) {
+                    setImage(imageResponse.display_url);
+                    setImageLoading(false);
+                }
+            })
     }
     // const { data, isError, error, isLoading, refetch } = useQuery({
     //     queryKey: ['id'],
@@ -40,7 +54,7 @@ const EditService = () => {
     // }
 
 
-    //* Individual service finding
+    //* Get Individual service
 
     useEffect(() => {
         fetch(`https://luxury-living-server-production.up.railway.app/services/${id}`)
@@ -62,7 +76,7 @@ const EditService = () => {
             method: 'PATCH',
             body: JSON.stringify({
                 ...data,
-                img: base64Image || img
+                img: image || img
             }),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
@@ -72,7 +86,7 @@ const EditService = () => {
             .then((data) => {
                 console.log(data);
                 if (data.modifiedCount) {
-                    refetch();
+                    // refetch();
                     toast.success('Updated Successfully')
                 }
 
@@ -128,8 +142,8 @@ const EditService = () => {
                     <label className='font-semibold text-primary'>Image</label>
                     {/* Selected Image */}
                     {
-                        img && <div className='w-56 h-56 p-2  mb-5 border-2 border-[#251D58] rounded-full'>
-                            <img src={base64Image ? base64Image : img} className='w-full h-full rounded-full' alt="" />
+                        img && <div className={`w-56 h-56 p-2  mb-5 border-2 border-[#251D58] rounded-full ${imageLoading && 'flex justify-center items-center'}`}>
+                            {imageLoading ? <BounceLoading /> : <img src={image ? image : img} className='w-full h-full rounded-full' alt="" />}
                         </div>
                     }
                     {/* Upload Image Button */}
@@ -137,7 +151,7 @@ const EditService = () => {
                         <AiOutlineCloudUpload className='text-2xl' />
                         <span className='text-secondary'>Upload Image</span>
                         <input
-                            onChange={(e) => handleBase64Image(e)}
+                            onChange={handleUploadImage}
                             className="absolute inset-0 opacity-0"
                             type="file"
                             accept='.jpeg, .png, .jpg'

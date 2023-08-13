@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../../components/Loading";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
+import EmptyPage from "../../components/EmptyPage";
 
 const UserOrder = () => {
     const { data: orders, isLoading, isError, refetch } = useQuery({
@@ -31,6 +32,10 @@ const UserOrder = () => {
                     toast.success('Delivery Status Updated')
                 }
             });
+    };
+
+    if (orders.length === 0) {
+        return <EmptyPage>Empty User Orders!</EmptyPage>
     }
 
     return (

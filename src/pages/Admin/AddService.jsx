@@ -1,71 +1,62 @@
-import { data } from 'browserslist';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { AiOutlineCloudUpload } from 'react-icons/ai'
+import BounceLoading from '../../components/BounceLoading';
 
 const AddService = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const [imageLoading, setImageLoading] = useState(false);
     const imgToken = import.meta.env.VITE_IMAGE_UPLOAD_TOKEN;
     const imgHostUrl = `https://api.imgbb.com/1/upload?key=${imgToken}`
     const [customError, setCustomError] = useState('');
-    const [base64Image, setBase64Image] = useState('');
-    const [image, setImage] = useState('');
-    const handleBaseUrl = (e) => {
-        reset();
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setBase64Image(reader.result)
-        }
-        reader.readAsDataURL(e.target.files[0]);
-        //? Set custom error empty!
-        setCustomError('');
+    const [img, setImg] = useState('');
 
-
-    }
-
-    //* Add service function
-    const handleAddService = (data) => {
+    //* Upload the image to hosting server
+    const handleUploadImage = (e) => {
         const formData = new FormData();
-        formData.append('image', data.image[0]);
-
-
+        formData.append('image', e.target.files[0]);
         if (formData) {
-            fetch(imgHostUrl, {
-                method: 'POST',
-                body: formData
+            setImageLoading(true);
+        }
+        fetch(imgHostUrl, {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(({ data: imageResponse }) => {
+                if (imageResponse.id) {
+                    setImg(imageResponse.display_url);
+                    setImageLoading(false);
+                }
             })
-                .then(res => res.json())
-                .then(imgResponse => {
-                    setImage(imgResponse.data.display_url);
-                })
-        }
-
-        // //* Add a service in database
-        if (image) {
-            fetch('https://luxury-living-server-production.up.railway.app/services', {
-                method: 'POST',
-                body: JSON.stringify({
-                    img: image
-                }),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                },
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    if (data.acknowledged) {
-                        toast.success('Service added!');
-                        setImage('');
-                        reset();
-                    }
-                    console.log(data);
-                });
-        }
-        else {
-            setCustomError('Image field is required! Please upload a image.')
-        }
     }
+
+    // //* Add a service in database
+    const handleAddService = (data) => {
+        fetch('https://luxury-living-server-production.up.railway.app/services', {
+            method: 'POST',
+            body: JSON.stringify({
+                ...data,
+                img
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.acknowledged) {
+                    toast.success('Service added!');
+                    setImg('');
+                    reset();
+                }
+                console.log(data);
+            });
+    }
+
+
+
 
     return (
         <div className='mt-3 lg:ml-3 lg:mr-10'>
@@ -118,8 +109,8 @@ const AddService = () => {
                     <label className='font-semibold text-primary'>Image</label>
                     {/* Selected Image */}
                     {
-                        base64Image && <div className='w-56 h-56  mb-5 border-2 border-[#251D58] rounded-full'>
-                            <img src={base64Image} className='w-full h-full rounded-full' alt="" />
+                        img && <div className={`w-56 h-56 p-2  mb-5 border-2 border-[#251D58] rounded-full ${imageLoading && 'flex justify-center items-center'}`}>
+                            {imageLoading ? <BounceLoading /> : <img src={img} className='w-full h-full rounded-full' alt="" />}
                         </div>
                     }
                     {/* Upload Image Button */}
@@ -127,24 +118,22 @@ const AddService = () => {
                         <AiOutlineCloudUpload className='text-2xl' />
                         <span className='text-secondary'>Upload Image</span>
                         <input
-                            onChange={(e) => handleBaseUrl(e)}
+                            onChange={handleUploadImage}
                             className="absolute inset-0 opacity-0"
                             type="file"
                             accept='.jpeg, .png, .jpg'
-                            {...register('image', { required: 'Image is required!' })}
+                            required
 
                         />
 
                     </div>
                 </div>
                 {
-                    errors?.image?.type === 'required' && <p className='error'>{errors.image.message}</p>
-                }
-                {
                     customError && <p className='error'>{customError}</p>
                 }
                 {/* Submit Button */}
-                <input type="submit" value="Add Service" className='btn mt-3 cursor-pointer' />
+                <input type="submit" value="Add Service" className={`btn mt-3 cursor-pointer ${!img && 'bg-gray-400 active:scale-100 cursor-default'}`}
+                    disabled={!img} />
 
             </form>
         </div>

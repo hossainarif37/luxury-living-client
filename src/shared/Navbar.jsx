@@ -41,7 +41,7 @@ const Navbar = () => {
     </>
 
     return (
-        <nav className={`flex justify-between items-center sticky top-0 ${isDashboard ? 'lg:px-16' : 'lg:padding'}  lg:pt-5 ${authPage} px-3 py-3  z-50`}>
+        <nav id='navbar' className={`flex justify-between items-center  sticky top-0 ${isDashboard ? 'lg:px-16' : 'lg:padding'}  lg:pt-5 ${authPage} px-3 py-3  z-50`}>
 
             {/* Drawer Button Start*/}
             <button onClick={() => {
@@ -68,7 +68,15 @@ const Navbar = () => {
                 {/* menu */}
                 <ul className={`menu duration-500  ${navToggle ? 'right-0' : 'right-[-250px]'}`}>
                     {menuItems}
-                    <button onClick={() => navigate('/login')} className='btn w-10/12'>Login</button>
+                    {/*//* Button */}
+                    {user ? <button
+                        className='btn bg-gray-500 font-bold px-7 w-10/12'
+                        onClick={() => {
+                            signOut();
+                            navigate('/')
+                        }}
+                    >Logout</button> : <button onClick={() => navigate('/login')} className='btn w-10/12'>Login</button>}
+
                 </ul>
             </div>
 
@@ -78,8 +86,11 @@ const Navbar = () => {
             </ul>
             {
                 user ? <button
-                    className='btn bg-gray-500 font-bold px-7'
-                    onClick={() => signOut()}
+                    className='btn bg-gray-500 font-bold px-7 hidden lg:block'
+                    onClick={() => {
+                        signOut();
+                        navigate('/')
+                    }}
                 >Logout</button> :
                     <Link className='btn hidden lg:block' to='/login'>Login</Link>
             }
