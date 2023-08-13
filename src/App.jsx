@@ -29,7 +29,7 @@ const App = () => {
           <Toaster />
         </div>
         <Footer />
-        <a href='' onClick={(e) => handleAchorLink(e, 'navbar')} className="text-4xl fixed bottom-5 right-3">
+        <a href='' onClick={(e) => handleAchorLink(e, 'banner')} className="text-4xl fixed bottom-5 right-3">
           <BsFillArrowUpSquareFill />
         </a>
       </div>
