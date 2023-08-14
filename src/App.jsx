@@ -12,7 +12,7 @@ const App = () => {
 
   return (
     <Menu.Provider value={{ navToggle, setNavToggle, drawerToggle, setDrawerToggle }}>
-      <div className="overflow-x-hidden lg:overflow-x-visible relative ">
+      <div className="max-w-[1440px] mx-auto overflow-x-hidden lg:overflow-x-visible relative ">
         <Navbar />
         <div onClick={() => {
           navToggle & setNavToggle(false);

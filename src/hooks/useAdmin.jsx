@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSignOut } from "react-firebase-hooks/auth";
-import auth from "../firebase.init";
-import { toast } from "react-hot-toast";
 
 const useAdmin = (email) => {
     const [isAdmin, setIsAdmin] = useState(false);
